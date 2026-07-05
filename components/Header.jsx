@@ -67,11 +67,11 @@ export default function Header() {
           ))}
         </div>
         <div className="hidden items-center gap-3 justify-self-end lg:flex anim-fade-down anim-delay-2">
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <MagneticButton href="/contact">Plan My Growth</MagneticButton>
         </div>
         <div className="flex items-center gap-2 justify-self-end lg:hidden">
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <button
             type="button"
             className="grid h-11 w-11 place-items-center text-ink"
@@ -85,13 +85,17 @@ export default function Header() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-50 bg-ink/30 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[999] bg-ink/30 backdrop-blur-sm lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="ml-auto flex h-full w-[88%] max-w-sm flex-col bg-ink p-6 text-warm shadow-2xl"
+              className="relative z-[1000] ml-auto flex h-full w-[88%] max-w-sm flex-col p-6 shadow-2xl"
+              style={{
+                backgroundColor: "var(--theme-card)",
+                color: "var(--theme-text-primary)",
+              }}
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -103,7 +107,7 @@ export default function Header() {
                 </span>
                 <button
                   type="button"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-warm/20"
+                  className="grid h-10 w-10 place-items-center rounded-full border border-[var(--theme-border)] text-[var(--theme-text-primary)]"
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
                 >
@@ -121,14 +125,15 @@ export default function Header() {
                     <Link
                       href={href}
                       onClick={() => setOpen(false)}
-                      className="block border-b border-warm/12 py-4 font-serif text-3xl"
+                      className="block border-b border-[var(--theme-border)] py-4 font-serif text-3xl text-[var(--theme-text-primary)]"
+                      style={{ color: "var(--theme-text-primary)" }}
                     >
                       {label}
                     </Link>
                   </motion.div>
                 ))}
               </div>
-              <p className="mt-auto text-sm leading-6 text-warm/65">
+              <p className="mt-auto text-sm leading-6 text-[var(--theme-text-secondary)]">
                 Strategy, partnerships, and performance campaigns for companies
                 ready to make marketing easier to trust.
               </p>

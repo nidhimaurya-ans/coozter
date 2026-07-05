@@ -24,30 +24,37 @@ export default function ServicesGrowthCanvas() {
       <AnimatedSection className={`${sectionSpace} overflow-hidden`}>
         <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
           <SectionHeader
-            eyebrow="Growth canvas"
+           
             title="Marketing systems that move like one connected engine."
             text="Every channel has a role: attract demand, shape trust, capture intent, and report what should happen next."
           />
 
           <MotionItem direction="left" className="relative min-h-[32rem]">
-            <div className="visual-blob-stage">
-              <div className="visual-blob-core" />
-              <span className="visual-orbit visual-orbit-sm" />
-              <span className="visual-orbit visual-orbit-lg" />
-              {[
-                ["SEO", "Search intent"],
-                ["Ads", "Fast demand"],
-                ["Social", "Brand trust"],
-                ["CRO", "More action"],
-              ].map(([label, text], index) => (
-                <span
-                  key={label}
-                  className={`floating-label floating-label-pos-${index + 1}`}
-                >
-                  <strong>{label}</strong>
-                  <small>{text}</small>
-                </span>
-              ))}
+            <div className="" aria-label="Connected marketing growth system visual" role="img">
+              <span className="growth-canvas-ring growth-canvas-ring-one" />
+              <span className="growth-canvas-ring growth-canvas-ring-two" />
+              <div className="growth-canvas-core">
+                <span>Growth</span>
+                <strong>Engine</strong>
+              </div>
+              <div className="growth-canvas-card growth-canvas-card-one">
+                <strong>SEO</strong>
+                <span>Intent captured</span>
+              </div>
+              <div className="growth-canvas-card growth-canvas-card-two">
+                <strong>Paid</strong>
+                <span>Demand tested</span>
+              </div>
+              <div className="growth-canvas-card growth-canvas-card-three">
+                <strong>Content</strong>
+                <span>Trust built</span>
+              </div>
+              <div className="growth-canvas-card growth-canvas-card-four">
+                <strong>Analytics</strong>
+                <span>Decisions clear</span>
+              </div>
+              <span className="growth-canvas-scan growth-canvas-scan-one" />
+              <span className="growth-canvas-scan growth-canvas-scan-two" />
             </div>
           </MotionItem>
         </div>
@@ -136,7 +143,7 @@ export default function ServicesGrowthCanvas() {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection className={sectionSpace}>
+      {/* <AnimatedSection className={sectionSpace}>
         <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-start">
           <div>
             <SectionHeader
@@ -169,9 +176,9 @@ export default function ServicesGrowthCanvas() {
             <span>Revenue</span>
           </MotionItem>
         </div>
-      </AnimatedSection>
+      </AnimatedSection> */}
 
-      <AnimatedSection className={sectionSpace}>
+      {/* <AnimatedSection className={sectionSpace}>
         <SectionHeader
           align="center"
           eyebrow="Industries and tools"
@@ -198,8 +205,8 @@ export default function ServicesGrowthCanvas() {
             </MotionItem>
           ))}
         </div>
-      </AnimatedSection>
-
+      </AnimatedSection> */}
+{/* 
       <AnimatedSection className={sectionSpace}>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <SectionHeader
@@ -224,9 +231,9 @@ export default function ServicesGrowthCanvas() {
             </span>
           ))}
         </div>
-      </AnimatedSection>
+      </AnimatedSection> */}
 
-      <AnimatedSection className={sectionSpace}>
+      {/* <AnimatedSection className={sectionSpace}>
         <div className="grid gap-12 lg:grid-cols-[0.76fr_1.24fr] lg:items-start">
           <SectionHeader
             eyebrow="Plans and fit"
@@ -289,7 +296,7 @@ export default function ServicesGrowthCanvas() {
             </MotionItem>
           ))}
         </div>
-      </AnimatedSection>
+      </AnimatedSection> */}
     </>
   );
 }

@@ -3,13 +3,13 @@ import { divider, sectionSpace, values } from "../_data/aboutContent";
 
 export default function BeliefsSection() {
   return (
-    <AnimatedSection className={`${sectionSpace} `}>
+    <div className={`${sectionSpace} `}>
       <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-start xl:gap-20">
         <div className="lg:sticky lg:top-28 anim-fade-up">
-          <p className="eyebrow inline-flex items-center text-moss gap-3">
+          {/* <p className="eyebrow inline-flex items-center text-moss gap-3">
             <span className="h-px w-9 bg-coral anim-reveal-line" />
             What we believe
-          </p>
+          </p> */}
 
           <h2 className="mt-5 max-w-[16ch] font-serif text-[2.4rem] leading-[0.98] text-ink sm:text-5xl md:text-6xl">
             Growth looks better when the customer journey is honest.
@@ -25,7 +25,7 @@ export default function BeliefsSection() {
           {values.map(([title, text], index) => (
             <div
               key={title}
-              className={`group border-b ${divider} py-8 transition duration-300 anim-fade-up last:border-b-0 hover:bg-white/70 md:px-8 md:[&:nth-child(odd)]:border-r md:[&:nth-last-child(-n+2)]:border-b-0 anim-delay-${Math.min(
+              className={`group border-b ${divider} py-8 transition duration-300 anim-fade-up last:border-b-0  md:px-8 md:[&:nth-child(odd)]:border-r md:[&:nth-last-child(-n+2)]:border-b-0 anim-delay-${Math.min(
                 index + 1,
                 5,
               )}`}
@@ -38,11 +38,11 @@ export default function BeliefsSection() {
                 {title}
               </h3>
 
-              <p className="mt-4 text-sm leading-7 text-ink/64">{text}</p>
+              <p className="mt-4 text-md leading-7 text-ink/64">{text}</p>
             </div>
           ))}
         </div>
       </div>
-    </AnimatedSection>
+    </div>
   );
 }

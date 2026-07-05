@@ -8,12 +8,12 @@ export const metadata = { title: "Services | Coozter" };
 
 export default function ServicesPage() {
   return (
-    <>
+    <div className="services-page-static-text">
       <ServicesHero />
       <ServiceCategoriesSection />
       <ServicesGrowthCanvas />
       <ServicesFAQSection />
-      <FinalCTASection />
-    </>
+      {/* <FinalCTASection /> */}
+    </div>
   );
 }
