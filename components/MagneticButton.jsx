@@ -6,7 +6,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 
 export default function MagneticButton({ href, children, variant = "dark", className = "" }) {
   const base =
-    "group inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold transition-all will-animate focus:outline-none focus-visible:ring-2 focus-visible:ring-moss focus-visible:ring-offset-4";
+    "group inline-flex items-center justify-center gap-2 px-5 py-3 text-lg font-semibold transition-all will-animate focus:outline-none focus-visible:ring-2 focus-visible:ring-moss focus-visible:ring-offset-4";
   const styles = variant === "light" ? "btn-secondary" : "btn-primary";
 
   const content = (

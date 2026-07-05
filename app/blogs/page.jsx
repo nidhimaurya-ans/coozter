@@ -39,9 +39,9 @@ export default function BlogsPage() {
   const remaining = filtered.slice(1);
 
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <section className="relative overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#eff9ff_42%,#dbeeff_100%)] pt-32 sm:pt-36 lg:pt-40">
-        <div className="container-pad relative pb-16 lg:pb-20">
+        <div className="container-pad relative pb-5">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,0.96fr)_minmax(430px,0.86fr)] lg:items-center xl:gap-20">
             <div className="anim-fade-up">
               <p className="mb-6 inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-moss">
@@ -107,7 +107,7 @@ export default function BlogsPage() {
         </div>
       </section>
 
-      <AnimatedSection className="container-pad py-14 sm:py-16 lg:py-20">
+      <AnimatedSection className="container-pad py-5">
         {filtered.length > 0 ? (
           <FeaturedArticle post={featured} />
         ) : (
@@ -116,7 +116,7 @@ export default function BlogsPage() {
       </AnimatedSection>
 
       {filtered.length > 0 && (
-        <AnimatedSection className="container-pad pb-16 lg:pb-24">
+        <AnimatedSection className="container-pad py-5">
           <div className="mb-8 flex flex-col gap-3 border-b border-slate-300/80 pb-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="eyebrow">All articles</p>
@@ -142,7 +142,7 @@ export default function BlogsPage() {
           )}
         </AnimatedSection>
       )}
-    </>
+    </div>
   );
 }
 

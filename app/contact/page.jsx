@@ -20,8 +20,8 @@ const responseSteps = [
 
 export default function ContactPage() {
   return (
-    <>
-      <section className="container-pad pt-32 sm:pt-36 lg:pt-40">
+    <div className="flex flex-col gap-5">
+      <section className="container-pad pb-5 pt-32 sm:pt-36 lg:pt-40">
         <div className="mx-auto max-w-4xl text-center anim-fade-up">
           <p className="text-xl font-medium uppercase anim-enter-left">
             {" "}
@@ -37,7 +37,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="container-pad py-14 sm:py-16 lg:py-20">
+      <section className="container-pad py-5">
         <div className="mx-auto w-full max-w-4xl">
           {/* <div className="lg:sticky lg:top-28">
             <h2 className="font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
@@ -107,7 +107,7 @@ export default function ContactPage() {
         </div>
       </AnimatedSection> */}
 
-      <section className="container-pad pb-24">
+      <section className="container-pad py-5">
         <div className="mb-6">
           <p className="eyebrow">Find us</p>
         </div>
@@ -122,6 +122,6 @@ export default function ContactPage() {
           />
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -39,9 +39,9 @@ export default async function BlogDetailPage({ params }) {
   ];
 
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <article className="overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#f3fbff_46%,#dcefff_100%)] pt-32 sm:pt-36 lg:pt-40">
-        <div className="container-pad relative pb-14 lg:pb-20">
+        <div className="container-pad relative pb-5">
           <Link
             href="/blogs"
             className="relative inline-flex items-center gap-2 rounded-full border border-slate-300/80 bg-white/76 px-4 py-2 text-sm font-semibold text-ink/70 shadow-[0_14px_38px_rgba(14,62,128,0.08)] transition hover:-translate-y-0.5 hover:border-coral/50 hover:text-moss anim-fade-up"
@@ -102,7 +102,7 @@ export default async function BlogDetailPage({ params }) {
         </div>
       </article>
 
-      <section className="container-pad py-14 lg:py-20">
+      <section className="container-pad py-5">
         <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,760px)_minmax(230px,1fr)] xl:gap-14">
           <aside className="hidden lg:block">
             <div className="sticky top-28 rounded-[1.35rem] border border-slate-300/80 bg-white/82 p-5 shadow-[0_18px_56px_rgba(14,62,128,0.08)] backdrop-blur">
@@ -167,7 +167,7 @@ export default async function BlogDetailPage({ params }) {
         </div>
       </section>
 
-      <AnimatedSection className="container-pad py-10 lg:py-16" id="related">
+      <AnimatedSection className="container-pad py-5" id="related">
         <div className="grid gap-8 rounded-[2rem] bg-[linear-gradient(135deg,#071b33,#0a3b7a_58%,#0f6fb8)] p-8 text-warm shadow-[0_28px_90px_rgba(7,27,51,0.18)] md:grid-cols-[1fr_0.8fr] md:p-10">
           <div>
             <h2 className="font-serif text-4xl leading-tight md:text-5xl">
@@ -186,7 +186,7 @@ export default async function BlogDetailPage({ params }) {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection className="container-pad py-12 lg:py-18">
+      <AnimatedSection className="container-pad py-5">
         <div className="mb-8 flex flex-col gap-4 border-b border-slate-300/80 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="eyebrow">Continue reading</p>
@@ -208,7 +208,7 @@ export default async function BlogDetailPage({ params }) {
         </div>
       </AnimatedSection>
 
-      <section className="container-pad pb-24">
+      <section className="container-pad py-5">
         <div className="rounded-[2rem] border border-slate-300/80 bg-white p-7 shadow-[0_22px_70px_rgba(14,62,128,0.08)] md:p-9">
           <h2 className="font-serif text-4xl text-ink">Newsletter</h2>
           <p className="mt-3 max-w-xl text-sm leading-7 text-ink/60">
@@ -218,6 +218,6 @@ export default async function BlogDetailPage({ params }) {
           <NewsletterForm />
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -23,7 +23,7 @@ import {
   FiZap,
 } from "react-icons/fi";
 
-export const sectionSpace = "container-pad py-14 sm:py-16 lg:py-24";
+export const sectionSpace = "container-pad py-5";
 export const divider = "border-slate-300/80 divide-slate-300/80";
 
 export const trustIndustries = [

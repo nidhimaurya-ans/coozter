@@ -2,8 +2,8 @@ import MagneticButton from "@/components/MagneticButton";
 
 export default function HomeCTASection() {
   return (
-    <section className="container-pad pb-24">
-      <div className="border-y border-moss/14 py-12">
+    <section className="container-pad py-5">
+      <div className="py-5">
         <div className="grid gap-8 md:grid-cols-[1fr_0.45fr] md:items-end">
           <div>
             <h2 className="mt-5 max-w-4xl font-serif text-[2.55rem] font-medium leading-[0.98] text-ink sm:text-6xl">

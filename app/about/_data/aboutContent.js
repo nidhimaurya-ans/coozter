@@ -125,5 +125,5 @@ export const operatingModel = [
   ],
 ];
 
-export const sectionSpace = "container-pad py-12 sm:py-16 lg:py-20";
+export const sectionSpace = "container-pad py-5";
 export const divider = "border-slate-300/80 divide-slate-300/80";

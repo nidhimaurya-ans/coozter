@@ -67,7 +67,7 @@ const serviceGroups = [
 
 export default function ServiceCategoriesSection() {
   return (
-    <section className="relative isolate overflow-hidden py-16 text-ink sm:py-20 lg:py-24">
+    <section className="relative isolate overflow-hidden py-5 text-ink">
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center"
         style={{ backgroundImage: "url('/assets/coozter-hero-bg.jpg')" }}
