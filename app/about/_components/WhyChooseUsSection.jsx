@@ -12,7 +12,9 @@ const cardDetails = [
 
 export default function WhyChooseUsSection() {
   return (
-    <AnimatedSection className={`${sectionSpace} relative isolate overflow-hidden`}>
+    <AnimatedSection
+      className={`${sectionSpace} relative isolate overflow-hidden`}
+    >
       <div className="mx-auto max-w-6xl text-center">
         <p className="eyebrow justify-center text-moss">Why choose us</p>
         <h2 className="mt-4 font-serif text-[2.45rem] font-semibold leading-tight text-ink sm:text-[3.25rem] md:text-[4rem]">

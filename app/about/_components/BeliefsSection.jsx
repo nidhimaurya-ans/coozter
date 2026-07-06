@@ -1,15 +1,16 @@
+import AnimatedSection from "@/components/AnimatedSection";
 import { divider, sectionSpace, values } from "../_data/aboutContent";
 
 const valueAnimations = [
-  "anim-scale-in",
+  "anim-slide-right",
   "anim-slide-left",
   "anim-fade-up",
-  "anim-slide-left",
+  "anim-slide-left-up",
 ];
 
 export default function BeliefsSection() {
   return (
-    <div className={`${sectionSpace} `}>
+    <AnimatedSection className={`${sectionSpace} `}>
       <div className="grid gap-12 xl:grid-cols-[0.78fr_1.22fr] xl:items-start xl:gap-20">
         <div className="xl:sticky xl:top-28">
           {/* <p className="eyebrow inline-flex items-center text-moss gap-3">
@@ -48,6 +49,6 @@ export default function BeliefsSection() {
           ))}
         </div>
       </div>
-    </div>
+    </AnimatedSection>
   );
 }

@@ -56,7 +56,7 @@ export default function WorkModelSection() {
                   5,
                 )}`}
               >
-                <div className="grid h-12 w-12 place-items-center rounded-full bg-coral/14 text-moss transition duration-300 anim-pop group-hover:bg-moss group-hover:text-white">
+                <div className="grid h-12 w-12 place-items-center rounded-full bg-coral text-white transition duration-300 anim-pop group-hover:bg-moss group-hover:text-white">
                   <Icon size={18} />
                 </div>
 

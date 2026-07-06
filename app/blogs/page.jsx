@@ -41,22 +41,22 @@ export default function BlogsPage() {
   return (
     <div className="flex flex-col gap-5">
       <section className="relative overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#eff9ff_42%,#dbeeff_100%)] pt-32 sm:pt-36 lg:pt-40">
-        <div className="container-pad relative pb-5">
-          <div className="grid gap-12 xl:grid-cols-[minmax(0,0.96fr)_minmax(430px,0.86fr)] xl:items-center xl:gap-20">
-            <div className="anim-fade-up">
-              <p className="mb-6 inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-moss">
+        <div className="container-pad relative pb-8 lg:pb-10">
+          <div className="grid gap-10 xl:grid-cols-[minmax(0,0.98fr)_minmax(420px,0.82fr)] xl:items-center xl:gap-16">
+            <div className="max-w-4xl anim-fade-up">
+              <p className="mb-5 inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-moss">
                 <span className="h-px w-10 bg-coral anim-reveal-line" />
                 Coozter Field Notes
               </p>
-              <h1 className="display-title max-w-4xl font-serif text-ink">
+              <h1 className="max-w-[12.5ch] font-serif text-[3.15rem] font-medium leading-[0.98] text-ink sm:text-[3.4rem] lg:text-[4.15rem]">
                 Clear thinking on partners, search, campaigns, and brand trust.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/64">
+              <p className="mt-6 max-w-2xl text-base leading-8 text-ink/64 sm:text-lg">
                 Practical notes from the work behind affiliate branding,
                 performance marketing, search visibility, and useful reporting.
               </p>
 
-              <div className="mt-9 max-w-2xl rounded-[1.75rem] border border-white/80 bg-white/72 p-4 shadow-[0_24px_80px_rgba(14,62,128,0.1)] backdrop-blur anim-fade-up anim-delay-2">
+              <div className="mt-8 max-w-2xl rounded-[1.5rem] border border-white/80 bg-white/72 p-4 shadow-[0_24px_80px_rgba(14,62,128,0.1)] backdrop-blur anim-fade-up anim-delay-2">
                 <label className="sr-only" htmlFor="blog-search">
                   Search articles
                 </label>
@@ -74,15 +74,15 @@ export default function BlogsPage() {
                   />
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2.5">
+                <div className="mt-4 flex flex-wrap items-center gap-2.5">
                   {categories.map((item) => (
                     <button
                       key={item}
                       type="button"
                       onClick={() => setCategory(item)}
-                      className={`inline-flex items-center gap-2 cursor-pointer  rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                      className={`inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold leading-none transition-all duration-300 ${
                         category === item
-                          ? "bg-blue-500 text-white shadow-[0_14px_34px_rgba(7,27,51,0.18)]"
+                          ? "bg-blue-500 text-white shadow-[0_14px_34px_rgba(7,27,51,0.18)] [&_*]:text-white"
                           : "border border-slate-300/80 bg-white/80 text-ink/68 hover:-translate-y-0.5 hover:border-coral/50 hover:bg-white hover:text-moss"
                       }`}
                     >
@@ -117,20 +117,20 @@ export default function BlogsPage() {
 
       {filtered.length > 0 && (
         <AnimatedSection className="container-pad py-5">
-          <div className="mb-8 flex flex-col gap-3 border-b border-slate-300/80 pb-6 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+          <div className="mb-8 flex flex-col gap-4 border-b border-slate-300/80 pb-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-3xl">
               <p className="eyebrow">All articles</p>
               <h2 className="mt-3 font-serif text-4xl leading-tight text-ink md:text-5xl">
                 Latest thinking from the field.
               </h2>
             </div>
-            <p className="rounded-full bg-moss/8 px-4 py-2 text-sm font-semibold text-moss">
+            <p className="w-max rounded-full bg-moss/8 px-4 py-2 text-sm font-semibold text-white">
               {filtered.length} article{filtered.length === 1 ? "" : "s"} found
             </p>
           </div>
 
           {remaining.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
               {remaining.map((post, index) => (
                 <ArticleCard key={post.slug} post={post} index={index} />
               ))}
@@ -150,8 +150,8 @@ function BlogHeroVisual({ featured }) {
   const image = getBlogImage(featured.slug);
 
   return (
-    <div className="relative min-h-[420px] anim-blur-in anim-delay-2 sm:min-h-[470px]">
-      <div className="absolute right-0 top-0 h-[310px] w-[92%] overflow-hidden rounded-[1.35rem] border border-white/80 bg-white shadow-[0_30px_90px_rgba(14,62,128,0.14)] sm:h-[385px] sm:w-[82%] sm:rounded-[2rem]">
+    <div className="relative min-h-[420px] anim-blur-in anim-delay-2 sm:min-h-[470px] xl:min-h-[500px]">
+      <div className="absolute right-0 top-0 h-[310px] w-[92%] overflow-hidden rounded-[1.35rem] border border-white/80 bg-white shadow-[0_30px_90px_rgba(14,62,128,0.14)] sm:h-[385px] sm:w-[84%] sm:rounded-[1.75rem] xl:h-[410px]">
         <div
           className="h-full bg-cover bg-center transition-transform duration-700 hover:scale-105"
           style={{ backgroundImage: `url(${image})` }}
@@ -164,13 +164,13 @@ function BlogHeroVisual({ featured }) {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-sky-100">
             {featured.category}
           </p>
-          <p className="max-w-md font-serif text-2xl leading-tight sm:text-4xl">
+          <p className="max-w-md font-serif text-2xl leading-tight sm:text-[2.45rem]">
             {featured.title}
           </p>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-0 w-[86%] rounded-[1.2rem] border border-white/80 bg-white/88 p-4 shadow-[0_24px_80px_rgba(14,62,128,0.12)] backdrop-blur anim-fade-up anim-delay-4 sm:w-[68%] sm:rounded-[1.5rem] sm:p-5">
+      <div className="absolute bottom-6 left-0 w-[88%] rounded-[1.2rem] border border-white/80 bg-white/90 p-4 shadow-[0_24px_80px_rgba(14,62,128,0.12)] backdrop-blur anim-fade-up anim-delay-4 sm:w-[70%] sm:rounded-[1.35rem] sm:p-5">
         <div className="flex items-center gap-3 text-moss">
           <span className="grid h-10 w-10 place-items-center rounded-full bg-coral/14">
             <FiTrendingUp size={18} />
@@ -184,7 +184,9 @@ function BlogHeroVisual({ featured }) {
             </p>
           </div>
         </div>
-        <p className="mt-4 text-sm leading-6 text-ink/64">{featured.excerpt}</p>
+        <p className="mt-4 text-sm leading-6 text-ink/64 line-clamp-3">
+          {featured.excerpt}
+        </p>
       </div>
 
       <div className="absolute right-7 top-8 hidden rounded-2xl bg-ink px-4 py-3 text-white shadow-[0_18px_52px_rgba(7,27,51,0.22)] anim-fade-up anim-delay-5 sm:block">
@@ -201,17 +203,17 @@ function BlogHeroVisual({ featured }) {
 
 function FeaturedArticle({ post }) {
   return (
-    <article className="group grid overflow-hidden rounded-[2rem] border border-slate-300/80 bg-white shadow-[0_24px_80px_rgba(14,62,128,0.1)] transition-all duration-500 hover:-translate-y-1 hover:border-coral/40 hover:shadow-[0_34px_100px_rgba(14,62,128,0.16)] lg:grid-cols-[1.08fr_0.92fr]">
+    <article className="group grid overflow-hidden rounded-[1.75rem] border border-slate-300/80 bg-white shadow-[0_24px_80px_rgba(14,62,128,0.1)] transition-all duration-500 hover:-translate-y-1 hover:border-coral/40 hover:shadow-[0_34px_100px_rgba(14,62,128,0.16)] lg:grid-cols-[1fr_1fr]">
       <BlogThumb post={post} featured />
-      <div className="flex flex-col justify-end p-6 sm:p-8 lg:p-10">
-        <div className="mb-5 flex flex-wrap gap-3 text-xs uppercase tracking-[0.12em] text-ink/45">
+      <div className="flex min-h-full flex-col justify-center p-6 sm:p-8 lg:p-10">
+        <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs uppercase tracking-[0.12em] text-ink/45">
           <span className="rounded-full bg-coral/14 px-3 py-1 font-semibold text-moss">
             {post.category}
           </span>
           <span>{post.readTime}</span>
           <span>{post.date}</span>
         </div>
-        <h2 className="font-serif text-4xl leading-tight text-ink md:text-6xl">
+        <h2 className="max-w-[13ch] font-serif text-4xl leading-tight text-ink md:text-[3.35rem]">
           <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
         </h2>
         <p className="mt-5 max-w-xl text-base leading-8 text-ink/64">
@@ -221,9 +223,10 @@ function FeaturedArticle({ post }) {
           <span className="font-semibold text-ink">By {post.author}</span>
           <Link
             href={`/blogs/${post.slug}`}
-            className="inline-flex items-center gap-2 rounded-full bg-moss/8 px-4 py-2 font-semibold text-moss transition hover:bg-moss hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full bg-[#0d5ee8] px-4 py-2 font-semibold text-white shadow-[0_10px_24px_rgba(13,94,232,0.18)] transition hover:bg-[#084fc9] [&_*]:text-white"
           >
-            Read article <FiArrowRight size={16} />
+            <span className="text-white">Read article</span>
+            <FiArrowRight size={16} className="text-white" />
           </Link>
         </div>
       </div>
@@ -234,27 +237,30 @@ function FeaturedArticle({ post }) {
 function ArticleCard({ post, index }) {
   return (
     <article
-      className={`group overflow-hidden rounded-[1.5rem] border border-slate-300/80 bg-white shadow-[0_18px_56px_rgba(14,62,128,0.08)] transition-all duration-500 hover:-translate-y-1.5 hover:border-coral/40 hover:shadow-[0_28px_82px_rgba(14,62,128,0.14)] anim-fade-up anim-delay-${Math.min(index + 1, 5)}`}
+      className={`group flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-slate-300/80 bg-white shadow-[0_18px_56px_rgba(14,62,128,0.08)] transition-all duration-500 hover:-translate-y-1.5 hover:border-coral/40 hover:shadow-[0_28px_82px_rgba(14,62,128,0.14)] anim-fade-up anim-delay-${Math.min(index + 1, 5)}`}
     >
       <BlogThumb post={post} />
-      <div className="p-5 sm:p-6">
-        <div className="mb-4 flex flex-wrap gap-3 text-[0.68rem] uppercase tracking-[0.12em] text-ink/45">
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.68rem] uppercase tracking-[0.12em] text-ink/45">
           <span className="rounded-full bg-coral/14 px-3 py-1 font-semibold text-moss">
             {post.category}
           </span>
           <span>{post.readTime}</span>
         </div>
-        <h3 className="font-serif text-3xl leading-tight text-ink">
+        <h3 className="font-serif text-[1.9rem] leading-tight text-ink">
           <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
         </h3>
-        <p className="mt-4 text-sm leading-7 text-ink/62">{post.excerpt}</p>
-        <div className="mt-6 flex items-center justify-between border-t border-slate-300/80 pt-4 text-xs text-ink/50">
+        <p className="mt-4 text-sm leading-7 text-ink/62 line-clamp-4">
+          {post.excerpt}
+        </p>
+        <div className="mt-auto flex items-center justify-between border-t border-slate-300/80 pt-4 text-xs text-ink/50">
           <span>{post.author}</span>
           <Link
             href={`/blogs/${post.slug}`}
-            className="inline-flex items-center gap-1 font-semibold text-moss"
+            className="inline-flex min-w-[6.8rem] items-center justify-center gap-1.5 rounded-full bg-[#0d5ee8] px-4 py-2 font-semibold !text-white shadow-[0_8px_20px_rgba(13,94,232,0.16)] transition hover:bg-[#084fc9] [&_*]:!text-white"
           >
-            Read <FiArrowRight size={13} />
+            <span className="!text-white">Read article</span>
+            <FiArrowRight size={13} className="!text-white" />
           </Link>
         </div>
       </div>
@@ -267,7 +273,7 @@ function BlogThumb({ post, featured = false }) {
 
   return (
     <div
-      className={`${featured ? "min-h-[320px] lg:min-h-[520px]" : "min-h-[230px]"} relative overflow-hidden bg-cover bg-center`}
+      className={`${featured ? "min-h-[320px] lg:min-h-[480px]" : "min-h-[220px]"} relative shrink-0 overflow-hidden bg-cover bg-center`}
       style={{ backgroundImage: `url(${image})` }}
     >
       <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">

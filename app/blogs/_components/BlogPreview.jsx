@@ -36,7 +36,7 @@ export default function BlogPreview({ post, featured = false }) {
         </p>
       </div>
       <div className={featured ? "self-end pb-3" : "p-5 sm:p-6"}>
-        <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.12em] text-ink/48">
+        <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.12em] text-white">
           <span>{post.readTime}</span>
           <span>{post.date}</span>
         </div>
@@ -50,9 +50,10 @@ export default function BlogPreview({ post, featured = false }) {
           <p className="font-semibold text-ink">By {post.author}</p>
           <Link
             href={`/blogs/${post.slug}`}
-            className="inline-flex items-center gap-1 font-semibold text-moss transition hover:text-coral"
+            className="inline-flex items-center gap-1 rounded-full bg-[#0d5ee8] px-3 py-1.5 font-semibold text-white shadow-[0_8px_20px_rgba(13,94,232,0.16)] transition hover:bg-[#084fc9] [&_*]:text-white"
           >
-            Read <FiArrowRight size={14} />
+            <span className="text-white">Read</span>
+            <FiArrowRight size={14} className="text-white" />
           </Link>
         </div>
       </div>

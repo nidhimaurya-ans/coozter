@@ -69,10 +69,10 @@ export default function ServiceCategoriesSection() {
   return (
     <section className="relative isolate overflow-hidden py-5 text-ink">
       <div
-        className="absolute inset-0 -z-20 bg-cover bg-center"
+        className="absolute inset-0 -z-20 bg-cover bg-center opacity-35"
         style={{ backgroundImage: "url('/assets/coozter-hero-bg.jpg')" }}
       />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(226,245,255,0.88),rgba(207,236,255,0.76)),linear-gradient(180deg,rgba(247,251,255,0.74),rgba(188,225,250,0.86))]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(245,251,255,0.96),rgba(225,244,255,0.9)),linear-gradient(180deg,rgba(255,255,255,0.9),rgba(211,237,255,0.88))]" />
 
       <div className="container-pad">
         <div className="mx-auto mb-14 max-w-5xl text-center anim-left-to-right">
@@ -87,14 +87,15 @@ export default function ServiceCategoriesSection() {
               as="article"
               key={title}
               direction="up"
-              delay={index * 0.11}
-              className="group relative flex min-h-[27rem] overflow-hidden rounded-[0.45rem] border border-white/70 bg-white/42 shadow-[0_22px_70px_rgba(14,62,128,0.08)] backdrop-blur-[3px] transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-coral/70 hover:shadow-[0_28px_90px_rgba(14,62,128,0.16)]"
+              delay={index * 0.08}
+              className="group relative flex min-h-[27rem] overflow-hidden rounded-[0.45rem] border border-white/80 bg-white/72 shadow-[0_22px_70px_rgba(14,62,128,0.07)] backdrop-blur-[5px] transition-[border-color,box-shadow,transform] duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-sky-300/80 hover:shadow-[0_28px_90px_rgba(14,62,128,0.14)]"
             >
-              <span className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[linear-gradient(0deg,var(--theme-footer)_0%,var(--theme-primary)_62%,var(--theme-accent)_100%)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform group-hover:scale-y-100" />
+              <span className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[linear-gradient(0deg,#0b5fd3_0%,#1184f2_58%,#58d7ff_100%)] transition-transform duration-[1150ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform group-hover:scale-y-100" />
+              <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1150ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.02))]" />
 
               <div className="relative z-10 flex min-h-[27rem] w-full flex-col">
-                <div className="grid min-h-[7rem] items-center border-b border-white/70 px-6 py-5 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-white/22">
-                  <h3 className="font-serif text-[1.45rem] font-semibold leading-tight text-ink transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-white">
+                <div className="grid min-h-[7rem] items-center border-b border-white/80 px-6 py-5 transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-white/24">
+                  <h3 className="font-serif text-[1.45rem] font-semibold leading-tight text-ink transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:!text-white">
                     {title}
                   </h3>
                 </div>
@@ -104,7 +105,7 @@ export default function ServiceCategoriesSection() {
                     {items.map((item) => (
                       <li
                         key={item}
-                        className="text-[0.96rem] font-medium leading-6 text-ink/64 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-white/82"
+                        className="text-[0.96rem] font-medium leading-6 text-ink/72 transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:!text-white"
                       >
                         {item}
                       </li>
@@ -113,9 +114,9 @@ export default function ServiceCategoriesSection() {
 
                   <Link
                     href={href}
-                    className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-bold text-moss transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-white"
+                    className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-bold text-blue-700 transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:!text-white [&_*]:transition-colors [&_*]:duration-1000 group-hover:[&_*]:!text-white"
                   >
-                    {cta}
+                    <span>{cta}</span>
                     <FiArrowRight size={16} />
                   </Link>
                 </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import AnimatedSection from "@/components/AnimatedSection";
 import {
   divider,
@@ -5,6 +7,9 @@ import {
   sectionSpace,
   teamMembers,
 } from "../_data/aboutContent";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { FiLinkedin, FiX } from "react-icons/fi";
 
 const imageAnimations = [
   "anim-scale-in",
@@ -14,6 +19,13 @@ const imageAnimations = [
 ];
 
 export default function TeamShowcaseSection() {
+  const [activeMember, setActiveMember] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <AnimatedSection className={sectionSpace}>
       <div className="grid">
@@ -43,10 +55,16 @@ export default function TeamShowcaseSection() {
             <div className="team-3d-path team-3d-path-one" />
             <div className="team-3d-path team-3d-path-two" />
 
-            {teamMembers.map(([name, role, focus, image], index) => (
+            {teamMembers.map((member, index) => {
+              const [name, role, focus, image] = member;
+              return (
               <article
                 key={name}
-                className={`team-3d-person team-3d-person-${index + 1}`}
+                className={`team-3d-person team-3d-person-${index + 1} cursor-pointer focus:z-[60] hover:z-[60]`}
+                tabIndex={0}
+                onMouseEnter={() => setActiveMember(member)}
+                onFocus={() => setActiveMember(member)}
+                onClick={() => setActiveMember(member)}
               >
                 <div
                   className={`team-3d-frame ${imageAnimations[index] ?? "anim-fade-up"} anim-delay-${Math.min(
@@ -67,7 +85,8 @@ export default function TeamShowcaseSection() {
                   </div>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
 
           <div className="grid gap-3">
@@ -120,6 +139,70 @@ export default function TeamShowcaseSection() {
           ))}
         </div> */}
       </div>
+      {mounted &&
+        activeMember &&
+        createPortal(
+        <div
+          className="fixed inset-0 z-[999] grid place-items-center bg-[#020b18]/72 px-4 py-6 backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${activeMember[0]} profile`}
+          onClick={() => setActiveMember(null)}
+        >
+          <div
+            className="grid w-full max-w-4xl overflow-hidden rounded-[1.5rem] border border-sky-200/24 bg-[#061b3d] text-white shadow-[0_34px_120px_rgba(2,12,32,0.54)] md:grid-cols-[0.85fr_1.15fr]"
+            onClick={(event) => event.stopPropagation()}
+            onMouseLeave={() => setActiveMember(null)}
+          >
+            <div
+              className="min-h-[18rem] bg-cover bg-center md:min-h-[28rem]"
+              style={{ backgroundImage: `url(${activeMember[3]})` }}
+              role="img"
+              aria-label={`${activeMember[0]}, ${activeMember[1]}`}
+            />
+            <div className="relative p-6 sm:p-8">
+              <button
+                type="button"
+                onClick={() => setActiveMember(null)}
+                className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white/16"
+                aria-label="Close profile"
+              >
+                <FiX />
+              </button>
+              <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-sky-200/90">
+                {activeMember[4]}
+              </p>
+              <h3 className="mt-4 font-serif text-4xl leading-none text-white sm:text-5xl">
+                {activeMember[0]}
+              </h3>
+              <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-[#6ed6ff]">
+                {activeMember[1]}
+              </p>
+              <p className="mt-6 text-base leading-8 text-white/78">
+                {activeMember[6]}
+              </p>
+              <div className="mt-6 rounded-2xl border border-white/12 bg-white/8 p-5">
+                <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-white/54">
+                  Focus
+                </p>
+                <p className="mt-2 text-sm leading-7 text-white/76">
+                  {activeMember[2]}
+                </p>
+              </div>
+              <a
+                href={`https://${activeMember[5]}`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-6 inline-flex max-w-full items-center gap-2 break-all rounded-full border border-sky-200/22 bg-[#0d5ee8]/78 px-4 py-3 text-sm font-extrabold text-white transition hover:bg-[#176fff]"
+              >
+                <FiLinkedin className="shrink-0" />
+                {activeMember[5]}
+              </a>
+            </div>
+          </div>
+        </div>,
+          document.body,
+        )}
     </AnimatedSection>
   );
 }
