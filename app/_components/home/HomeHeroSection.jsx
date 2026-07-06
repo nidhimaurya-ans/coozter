@@ -62,49 +62,49 @@ export default function HomeHeroSection() {
   ];
 
   return (
-    <section className="relative isolate mt-20 min-h-[620px] overflow-hidden bg-[linear-gradient(135deg,#061a2f_0%,#071b33_46%,#0d55b0_100%)] pt-28 text-white sm:mt-24 sm:pt-32 lg:mt-24 lg:h-[670px] lg:min-h-[670px] lg:pt-0">
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_78%_48%,rgba(34,183,255,0.16),transparent_30rem),radial-gradient(circle_at_18%_18%,rgba(13,94,232,0.16),transparent_24rem)]" />
+    <section className="relative isolate min-h-[620px] overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#f8fbff_46%,#e8f5ff_100%)] pt-28 text-ink sm:pt-32 lg:h-[670px] lg:min-h-[670px] lg:pt-0">
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_78%_48%,rgba(43,188,255,0.18),transparent_30rem),radial-gradient(circle_at_18%_18%,rgba(13,94,232,0.1),transparent_24rem)]" />
       <div className="pointer-events-none absolute right-[-4rem] top-[7rem] z-0 hidden h-[520px] w-[680px] overflow-visible lg:block xl:right-[-1rem] xl:w-[760px]">
         <img
-          className="anim-hero-zoom-out h-full w-full object-contain opacity-95 [filter:drop-shadow(0_0_42px_rgba(34,183,255,0.34))]"
+          className="anim-hero-zoom-out h-full w-full object-contain opacity-100"
           src="/assets/digital-marketing-services.svg"
           alt=""
           aria-hidden="true"
         />
       </div>
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-blue-100" />
 
       <div className="mx-auto flex min-h-[492px] w-full max-w-[1280px] flex-col justify-between px-5 pb-8 sm:px-8 lg:h-full lg:min-h-0 lg:px-[54px] lg:pb-[78px] lg:pt-[138px]">
         <div className="relative z-20 max-w-[540px]">
-          <p className="mb-[14px] anim-left-to-right text-[0.68rem] font-extrabold uppercase tracking-[0.13em] text-[#22b7ff] sm:text-[0.7rem] lg:text-[11px]">
+          <p className="mb-[14px] anim-left-to-right text-[0.68rem] font-extrabold uppercase tracking-[0.13em] text-[#0d5ee8] sm:text-[0.7rem] lg:text-[11px]">
             Affiliate Marketing & Performance Growth Agency
           </p>
-          <h1 className="text-[2.78rem] anim-left-to-right font-extrabold leading-[1.02] tracking-normal text-white sm:text-[3.65rem] lg:text-[54px] xl:text-[58px]">
+          <h1 className="text-[2.78rem] anim-left-to-right font-extrabold leading-[1.02] tracking-normal text-ink sm:text-[3.65rem] lg:text-[54px] xl:text-[58px]">
             We build growth that compounds.
             <span className="block text-[#096cff]">
               Performance that lasts.
             </span>
           </h1>
-          <p className="mt-[16px] max-w-[470px] anim-left-to-right text-sm font-medium leading-6 text-white/72 sm:text-[0.98rem] sm:leading-7 lg:text-[15px] lg:leading-[22px]">
+          <p className="mt-[16px] max-w-[470px] anim-left-to-right text-sm font-medium leading-6 text-ink/68 sm:text-[0.98rem] sm:leading-7 lg:text-[15px] lg:leading-[22px]">
             Coozter combines affiliate marketing, SEO, paid media, content, and
             analytics to drive measurable growth, real customers, and
             predictable results.
           </p>
 
-          <div className="mt-[24px] flex flex-col gap-3 sm:flex-row lg:gap-[14px]">
+          <div className="mt-[24px] grid grid-cols-2 gap-3 sm:flex sm:flex-row lg:gap-[14px]">
             <Link
               href="/contact"
-              className="group inline-flex h-[42px] items-center justify-center gap-2 rounded-[3px] bg-[#096cff] px-6 text-xs font-extrabold text-white shadow-[0_12px_26px_rgba(9,108,255,0.32)] transition duration-300 hover:bg-[#005ce6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#22b7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#020812] lg:h-[42px] lg:w-[178px] lg:px-0 lg:text-[12px]"
+              className="group inline-flex h-[42px] min-w-0 items-center justify-center gap-1.5 rounded-[3px] bg-[#096cff] px-2 text-[0.68rem] font-extrabold text-white shadow-[0_12px_26px_rgba(9,108,255,0.24)] transition duration-300 hover:bg-[#005ce6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d5ee8] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:gap-2 sm:px-6 sm:text-xs lg:h-[42px] lg:w-[178px] lg:px-0 lg:text-[12px]"
             >
               Book a Strategy Call
               <FiArrowRight
-                size={14}
-                className="transition-transform duration-300 group-hover:translate-x-1"
+                size={13}
+                className="shrink-0 transition-transform duration-300 group-hover:translate-x-1 sm:size-[14px]"
               />
             </Link>
             <Link
               href="/services"
-              className="inline-flex h-[42px] items-center justify-center rounded-[3px] border border-white/26 bg-[#07111f]/72 px-6 text-xs font-extrabold text-white transition duration-300 hover:border-[#22b7ff] hover:bg-[#071a31] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#22b7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#020812] lg:h-[42px] lg:w-[176px] lg:px-0 lg:text-[12px]"
+              className="inline-flex h-[42px] min-w-0 items-center justify-center rounded-[3px] border border-blue-200 bg-white/86 px-2 text-[0.68rem] font-extrabold text-[#0d5ee8] shadow-[0_10px_24px_rgba(13,94,232,0.08)] transition duration-300 hover:border-[#0d5ee8] hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d5ee8] focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:px-6 sm:text-xs lg:h-[42px] lg:w-[176px] lg:px-0 lg:text-[12px]"
             >
               Explore Our Services
             </Link>
@@ -113,27 +113,27 @@ export default function HomeHeroSection() {
 
         <div className="relative z-10 mt-8 h-[260px] overflow-hidden lg:hidden">
           <img
-            className="anim-hero-zoom-out mx-auto h-full w-full object-contain opacity-95 [filter:drop-shadow(0_0_32px_rgba(34,183,255,0.32))]"
+            className="anim-hero-zoom-out mx-auto h-full w-full object-contain opacity-100"
             src="/assets/digital-marketing-services.svg"
             alt=""
             aria-hidden="true"
           />
         </div>
 
-        <div className="relative z-20 mb-6 mt-8 grid gap-4 sm:grid-cols-2 lg:mb-8 lg:mt-10 lg:w-[760px] lg:grid-cols-4 lg:gap-0">
+        <div className="relative z-20 mb-6 mt-8 grid grid-cols-2 gap-4 lg:mb-8 lg:mt-10 lg:w-[760px] lg:grid-cols-4 lg:gap-0">
           {metrics.map(({ value, label, icon: Icon }, index) => (
             <div
               key={label}
-              className={`flex min-h-[4.25rem] items-start gap-3 ${index > 0 ? "lg:border-l lg:border-white/16 lg:pl-6" : ""}`}
+              className={`flex min-h-[4.25rem] items-start gap-3 ${index > 0 ? "lg:border-l lg:border-blue-100 lg:pl-6" : ""}`}
             >
-              <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#0b70ff]/60 bg-[#03162a]/92 text-[#22b7ff] shadow-[0_0_20px_rgba(9,108,255,0.28)]">
+              <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-blue-200 bg-white text-[#0d5ee8]">
                 <Icon size={17} />
               </span>
               <span className="block min-w-0 text-left">
-                <span className="block text-[1.35rem] font-extrabold leading-none text-white lg:text-[24px]">
+                <span className="block text-[1.35rem] font-extrabold leading-none text-[#071b33] lg:text-[24px]">
                   {value}
                 </span>
-                <span className="mt-1.5 block max-w-[8.5rem] text-[0.72rem] font-semibold leading-[1.25rem] text-white/76 lg:max-w-[7.5rem] lg:text-[11px] lg:leading-[15px]">
+                <span className="mt-1.5 block max-w-[8.5rem] text-[0.72rem] font-semibold leading-[1.25rem] text-[#32465f] lg:max-w-[7.5rem] lg:text-[11px] lg:leading-[15px]">
                   {label}
                 </span>
               </span>

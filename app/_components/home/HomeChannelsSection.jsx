@@ -27,9 +27,9 @@ export default function HomeChannelsSection() {
   return (
     <AnimatedSection className="overflow-hidden bg-[linear-gradient(135deg,#061a2f_0%,#071b33_46%,#0d55b0_100%)] py-5 text-white ">
       <div className="container-pad relative">
-        <div className="grid gap-14 xl:grid-cols-[0.52fr_0.48fr] xl:items-center">
+        <div className="grid gap-8 sm:gap-10 md:grid-cols-[0.48fr_0.52fr] md:items-center lg:grid-cols-[0.52fr_0.48fr] xl:gap-14">
           <div className="relative">
-            <h2 className="font-serif text-[3.1rem] font-medium leading-[1.28] sm:text-[3.2rem] mt-5">
+            <h2 className="mt-5 font-serif text-[2.35rem] font-medium leading-[1.08] sm:text-[3.2rem] sm:leading-[1.18]">
               <span className="block text-white anim-left-to-right">
                 Every Marketing Channel
               </span>
@@ -37,12 +37,12 @@ export default function HomeChannelsSection() {
                 Works Together.
               </span>
             </h2>
-            <p className="mt-8 max-w-md text-lg leading-9 text-white/72 sm:text-xl">
+            <p className="mt-5 max-w-md text-base leading-7 text-white/72 sm:mt-8 sm:text-xl sm:leading-9">
               We build a connected growth system where every channel supports
               the next, driving consistent pipeline and revenue.
             </p>
 
-            <div className="mt-12 grid gap-7 mb-8">
+            <div className="mb-4 mt-7 grid gap-5 sm:mb-8 sm:mt-12 sm:gap-7">
               {benefits.map(([Icon, title, text], index) => (
                 <div
                   key={title}
@@ -105,16 +105,16 @@ export default function HomeChannelsSection() {
           </div>
           */}
 
-          <div className="relative min-h-[720px] anim-hero-zoom-out sm:min-h-[760px] lg:min-h-[640px]">
+          <div className="relative min-h-[500px] anim-hero-zoom-out sm:min-h-[590px] md:min-h-[600px] lg:min-h-[640px]">
             <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_52%_50%,rgba(13,108,255,0.22),transparent_19rem)]" />
-            <div className="absolute left-1/2 top-[16.75rem] h-[19rem] w-[19rem] -translate-x-1/2 rounded-full border border-blue-400/14 sm:top-[18.5rem] sm:h-[24rem] sm:w-[24rem] lg:top-1/2 lg:h-[28rem] lg:w-[28rem] lg:-translate-y-1/2" />
-            <div className="absolute left-1/2 top-[18.75rem] h-[15rem] w-[15rem] -translate-x-1/2 rounded-full border border-blue-400/10 sm:top-[21rem] sm:h-[19rem] sm:w-[19rem] lg:top-1/2 lg:h-[22rem] lg:w-[22rem] lg:-translate-y-1/2" />
-            <div className="absolute left-1/2 top-[20rem] h-[12.5rem] w-[12.5rem] -translate-x-1/2 rounded-full border border-dashed border-sky-400/42 anim-rotate-slow sm:top-[22.75rem] sm:h-[16rem] sm:w-[16rem] lg:top-1/2 lg:h-[18rem] lg:w-[18rem] lg:-translate-y-1/2" />
-            <div className="absolute left-1/2 top-[21.5rem] h-[9.5rem] w-[9.5rem] -translate-x-1/2 rounded-full bg-[conic-gradient(from_120deg,rgba(43,188,255,0.9),rgba(21,92,255,0.95),rgba(43,188,255,0.9))] p-[3px] shadow-[0_0_64px_rgba(13,108,255,0.52)] sm:top-[24.75rem] sm:h-[13rem] sm:w-[13rem] lg:top-1/2 lg:h-[14rem] lg:w-[14rem] lg:-translate-y-1/2">
+            <div className="absolute left-1/2 top-[2.75rem] h-[19rem] w-[19rem] -translate-x-1/2 rounded-full border border-blue-400/14 sm:top-[3.5rem] sm:h-[24rem] sm:w-[24rem] md:top-1/2 md:h-[20rem] md:w-[20rem] md:-translate-y-1/2 lg:h-[28rem] lg:w-[28rem]" />
+            <div className="absolute left-1/2 top-[4.75rem] h-[15rem] w-[15rem] -translate-x-1/2 rounded-full border border-blue-400/10 sm:top-[6rem] sm:h-[19rem] sm:w-[19rem] md:top-1/2 md:h-[16rem] md:w-[16rem] md:-translate-y-1/2 lg:h-[22rem] lg:w-[22rem]" />
+            <div className="absolute left-1/2 top-[6rem] h-[12.5rem] w-[12.5rem] -translate-x-1/2 rounded-full border border-dashed border-sky-400/42 anim-rotate-slow sm:top-[7.75rem] sm:h-[16rem] sm:w-[16rem] md:top-1/2 md:h-[13rem] md:w-[13rem] md:-translate-y-1/2 lg:h-[18rem] lg:w-[18rem]" />
+            <div className="absolute left-1/2 top-[7.5rem] h-[9.5rem] w-[9.5rem] -translate-x-1/2 rounded-full bg-[conic-gradient(from_120deg,rgba(43,188,255,0.9),rgba(21,92,255,0.95),rgba(43,188,255,0.9))] p-[3px] shadow-[0_0_64px_rgba(13,108,255,0.52)] sm:top-[9.75rem] sm:h-[13rem] sm:w-[13rem] md:top-1/2 md:h-[10rem] md:w-[10rem] md:-translate-y-1/2 lg:h-[14rem] lg:w-[14rem]">
               <div className="h-full w-full rounded-full bg-[#061b3d]" />
             </div>
 
-            <div className="absolute left-1/2 top-[22.7rem] z-20 grid h-28 w-28 -translate-x-1/2 place-items-center rounded-full bg-[#061b3d] text-center sm:top-[26.05rem] sm:h-36 sm:w-36 lg:top-1/2 lg:-translate-y-1/2">
+            <div className="absolute left-1/2 top-[8.7rem] z-20 grid h-28 w-28 -translate-x-1/2 place-items-center rounded-full bg-[#061b3d] text-center sm:top-[11.05rem] sm:h-36 sm:w-36 md:top-1/2 md:h-28 md:w-28 md:-translate-y-1/2 lg:h-36 lg:w-36">
               <span className="grid gap-3">
                 <FiZap className="mx-auto text-4xl text-white drop-shadow-[0_0_18px_rgba(43,188,255,0.75)] sm:text-5xl" />
                 <span className="text-sm font-black uppercase leading-tight tracking-[0.05em] text-white sm:text-lg">
@@ -125,33 +125,33 @@ export default function HomeChannelsSection() {
               </span>
             </div>
 
-            <div className="relative z-30 mx-auto grid max-w-sm grid-cols-1 gap-4 pt-[37rem] sm:max-w-2xl sm:grid-cols-2 sm:pt-[43rem] lg:absolute lg:inset-0 lg:max-w-none lg:grid-cols-none lg:pt-0">
+            <div className="relative z-30 mx-auto grid max-w-[22rem] grid-cols-2 gap-3 pt-[23rem] sm:max-w-2xl sm:gap-4 sm:pt-[30rem] md:absolute md:inset-0 md:max-w-none md:grid-cols-none md:pt-0">
               {growthPoints.map(([Icon, title, text], index) => {
                 const positions = [
-                  "lg:left-1/2 lg:top-[3%] lg:w-48 lg:-translate-x-1/2",
-                  "lg:left-[2%] lg:top-[30%] lg:w-56",
-                  "lg:right-[1%] lg:top-[31%] lg:w-56",
-                  "lg:left-[9%] lg:bottom-[12%] lg:w-56",
-                  "lg:right-[9%] lg:bottom-[12%] lg:w-56",
+                  "md:left-1/2 md:top-[5%] md:w-40 md:-translate-x-1/2 lg:top-[3%] lg:w-48",
+                  "md:left-0 md:top-[31%] md:w-40 lg:left-[2%] lg:top-[30%] lg:w-56",
+                  "md:right-0 md:top-[32%] md:w-40 lg:right-[1%] lg:top-[31%] lg:w-56",
+                  "md:left-[3%] md:bottom-[12%] md:w-40 lg:left-[9%] lg:w-56",
+                  "md:right-[3%] md:bottom-[12%] md:w-40 lg:right-[9%] lg:w-56",
                 ];
                 return (
                   <div
                     key={title}
-                    className={`group relative rounded-2xl border border-sky-400/22 bg-[#071d3f]/84 p-4 text-left shadow-[0_20px_50px_rgba(2,12,32,0.22)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-sky-300/55 hover:bg-[#082653]/92 hover:shadow-[0_24px_70px_rgba(37,99,235,0.28)] anim-pulse-soft lg:absolute ${positions[index]}`}
+                    className={`group relative rounded-2xl border border-sky-400/22 bg-[#071d3f]/84 p-3 text-left shadow-[0_20px_50px_rgba(2,12,32,0.22)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-sky-300/55 hover:bg-[#082653]/92 hover:shadow-[0_24px_70px_rgba(37,99,235,0.28)] anim-pulse-soft sm:p-4 md:absolute md:p-3 lg:p-4 ${positions[index]}`}
                     style={{
                       animationDelay: `${index * 0.55}s`,
                       animationDuration: "5.6s",
                     }}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#0d5ee8]/70 text-xl text-white shadow-[0_0_26px_rgba(13,94,232,0.42)] transition duration-300 group-hover:scale-105 group-hover:bg-[#176fff]">
+                    <div className="flex items-start gap-2.5 sm:items-center sm:gap-3">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#0d5ee8]/70 text-lg text-white shadow-[0_0_26px_rgba(13,94,232,0.42)] transition duration-300 group-hover:scale-105 group-hover:bg-[#176fff] sm:h-11 sm:w-11 sm:text-xl">
                         <Icon />
                       </span>
                       <span>
-                        <strong className="block text-base font-bold text-white">
+                        <strong className="block text-sm font-bold text-white sm:text-base">
                           {title}
                         </strong>
-                        <span className="mt-1 block text-xs leading-5 text-white/68">
+                        <span className="mt-1 block text-[0.68rem] leading-4 text-white/68 sm:text-xs sm:leading-5">
                           {text}
                         </span>
                       </span>

@@ -30,7 +30,7 @@ export default function HomeBlogPreviewSection() {
           </Link>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-[0.92fr_1.08fr] xl:items-stretch">
+        <div className="grid gap-5 md:grid-cols-[0.92fr_1.08fr] md:items-stretch">
           <Link
             href={`/blogs/${featured.slug}`}
             className="group relative min-h-[25rem] overflow-hidden rounded-[1.25rem] border border-slate-300/80 bg-white  anim-hero-zoom-out"

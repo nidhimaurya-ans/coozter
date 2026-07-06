@@ -14,7 +14,7 @@ export default function HomeServicesPreviewSection() {
       <section className="relative overflow-hidden ">
         <div className="pointer-events-none absolute right-[-7rem] top-1/2 h-80 w-80 -translate-y-1/2 rounded-full border border-moss/12 anim-rotate-slow" />
 
-        <div className="relative z-10 grid gap-10 xl:grid-cols-[0.38fr_0.62fr] xl:items-center">
+        <div className="relative z-10 grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-center">
           <div className="anim-left-to-right">
           
             <h2 className=" max-w-[18ch] font-serif text-[2.35rem] font-medium leading-[0.98] text-ink sm:text-5xl">
