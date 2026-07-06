@@ -7,6 +7,7 @@ import {
   sectionSpace,
   teamMembers,
 } from "../_data/aboutContent";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FiLinkedin, FiX } from "react-icons/fi";
@@ -58,33 +59,34 @@ export default function TeamShowcaseSection() {
             {teamMembers.map((member, index) => {
               const [name, role, focus, image] = member;
               return (
-              <article
-                key={name}
-                className={`team-3d-person team-3d-person-${index + 1} cursor-pointer focus:z-[60] hover:z-[60]`}
-                tabIndex={0}
-                onMouseEnter={() => setActiveMember(member)}
-                onFocus={() => setActiveMember(member)}
-                onClick={() => setActiveMember(member)}
-              >
-                <div
-                  className={`team-3d-frame ${imageAnimations[index] ?? "anim-fade-up"} anim-delay-${Math.min(
-                    index + 1,
-                    5,
-                  )}`}
+                <article
+                  key={name}
+                  className={`team-3d-person team-3d-person-${index + 1} cursor-pointer focus:z-[60] hover:z-[60]`}
+                  tabIndex={0}
+                  onMouseEnter={() => setActiveMember(member)}
+                  onMouseLeave={() => setActiveMember(null)}
+                  onFocus={() => setActiveMember(member)}
+                  onClick={() => setActiveMember(member)}
                 >
                   <div
-                    aria-label={`${name}, ${role} at Coozter`}
-                    role="img"
-                    className="team-3d-photo"
-                    style={{ backgroundImage: `url(${image})` }}
-                  />
-                  <div className="team-3d-shine" />
-                  <div className="team-3d-caption">
-                    <p>{role}</p>
-                    <h3>{name}</h3>
+                    className={`team-3d-frame ${imageAnimations[index] ?? "anim-fade-up"} anim-delay-${Math.min(
+                      index + 1,
+                      5,
+                    )}`}
+                  >
+                    <div
+                      aria-label={`${name}, ${role} at Coozter`}
+                      role="img"
+                      className="team-3d-photo"
+                      style={{ backgroundImage: `url(${image})` }}
+                    />
+                    <div className="team-3d-shine" />
+                    <div className="team-3d-caption">
+                      <p>{role}</p>
+                      <h3>{name}</h3>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
               );
             })}
           </div>
@@ -119,88 +121,123 @@ export default function TeamShowcaseSection() {
             ))}
           </div>
         </div>
-
-        {/* <div className={`grid gap-5 border-b ${divider} pb-6 sm:grid-cols-3`}>
-          {proofMetrics.map(([number, label], index) => (
-            <div
-              key={label}
-              className={`flex items-baseline justify-between gap-5 anim-fade-up sm:block anim-delay-${Math.min(
-                index + 1,
-                5,
-              )}`}
-            >
-              <p className="font-serif text-4xl leading-none text-moss sm:text-5xl">
-                {number}
-              </p>
-              <p className="mt-2 text-right text-[0.68rem] font-semibold uppercase leading-4 tracking-[0.1em] text-ink/48 sm:text-left">
-                {label}
-              </p>
-            </div>
-          ))}
-        </div> */}
       </div>
       {mounted &&
-        activeMember &&
         createPortal(
-        <div
-          className="fixed inset-0 z-[999] grid place-items-center bg-[#020b18]/72 px-4 py-6 backdrop-blur-md"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${activeMember[0]} profile`}
-          onClick={() => setActiveMember(null)}
-        >
-          <div
-            className="grid w-full max-w-4xl overflow-hidden rounded-[1.5rem] border border-sky-200/24 bg-[#061b3d] text-white shadow-[0_34px_120px_rgba(2,12,32,0.54)] md:grid-cols-[0.85fr_1.15fr]"
-            onClick={(event) => event.stopPropagation()}
-            onMouseLeave={() => setActiveMember(null)}
-          >
-            <div
-              className="min-h-[18rem] bg-cover bg-center md:min-h-[28rem]"
-              style={{ backgroundImage: `url(${activeMember[3]})` }}
-              role="img"
-              aria-label={`${activeMember[0]}, ${activeMember[1]}`}
-            />
-            <div className="relative p-6 sm:p-8">
-              <button
-                type="button"
+          <AnimatePresence>
+            {activeMember && (
+              <motion.div
+                className="pointer-events-none fixed inset-0 z-[999] grid place-items-center overflow-y-auto bg-[#020b18]/76 px-4 py-6 backdrop-blur-md"
+                role="dialog"
+                aria-modal="true"
+                aria-label={`${activeMember[0]} profile`}
                 onClick={() => setActiveMember(null)}
-                className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white/16"
-                aria-label="Close profile"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
               >
-                <FiX />
-              </button>
-              <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-sky-200/90">
-                {activeMember[4]}
-              </p>
-              <h3 className="mt-4 font-serif text-4xl leading-none text-white sm:text-5xl">
-                {activeMember[0]}
-              </h3>
-              <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-[#6ed6ff]">
-                {activeMember[1]}
-              </p>
-              <p className="mt-6 text-base leading-8 text-white/78">
-                {activeMember[6]}
-              </p>
-              <div className="mt-6 rounded-2xl border border-white/12 bg-white/8 p-5">
-                <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-white/54">
-                  Focus
-                </p>
-                <p className="mt-2 text-sm leading-7 text-white/76">
-                  {activeMember[2]}
-                </p>
-              </div>
-              <a
-                href={`https://${activeMember[5]}`}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 inline-flex max-w-full items-center gap-2 break-all rounded-full border border-sky-200/22 bg-[#0d5ee8]/78 px-4 py-3 text-sm font-extrabold text-white transition hover:bg-[#176fff]"
-              >
-                <FiLinkedin className="shrink-0" />
-                {activeMember[5]}
-              </a>
-            </div>
-          </div>
-        </div>,
+                <motion.div
+                  className="pointer-events-auto relative grid w-full max-w-5xl overflow-hidden rounded-[1.35rem] border border-sky-200/28 bg-[linear-gradient(135deg,#061a2f_0%,#071b33_48%,#0d55b0_100%)] text-white shadow-[0_34px_120px_rgba(2,12,32,0.54)] md:grid-cols-[0.88fr_1.12fr]"
+                  onClick={(event) => event.stopPropagation()}
+                  onMouseLeave={() => setActiveMember(null)}
+                  initial={{ opacity: 0, y: 34, scale: 0.94 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 24, scale: 0.96 }}
+                  transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(43,188,255,0.2),transparent_22rem),radial-gradient(circle_at_86%_82%,rgba(13,94,232,0.28),transparent_20rem)]" />
+
+                  <motion.div
+                    className="relative min-h-[18rem] overflow-hidden md:min-h-[31rem]"
+                    initial={{ scale: 1.08 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${activeMember[3]})` }}
+                      role="img"
+                      aria-label={`${activeMember[0]}, ${activeMember[1]}`}
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,26,47,0.02)_0%,rgba(6,26,47,0.34)_58%,rgba(6,26,47,0.78)_100%)]" />
+                    <div className="absolute bottom-5 left-5 right-5 rounded-[1rem] border border-white/18 p-4 backdrop-blur-md">
+                      <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-sky-100">
+                        {activeMember[4]} Leadership
+                      </p>
+                      <h3 className="mt-2 text-2xl font-extrabold leading-tight text-white">
+                        {activeMember[0]}
+                      </h3>
+                    </div>
+                  </motion.div>
+
+                  <div className="relative z-10 p-6 sm:p-8 lg:p-10">
+                    <motion.p
+                      className="inline-flex rounded-full border border-sky-200/28  px-3 py-1.5 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-sky-100"
+                      initial={{ opacity: 0, x: 22 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.12, duration: 0.38 }}
+                    >
+                      {activeMember[1]}
+                    </motion.p>
+                    <motion.h3
+                      className="mt-5 font-serif text-4xl font-extrabold leading-none text-white sm:text-5xl"
+                      initial={{ opacity: 0, x: 26 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.18, duration: 0.4 }}
+                    >
+                      {activeMember[0]}
+                    </motion.h3>
+                    <motion.p
+                      className="mt-5 max-w-xl text-base leading-8 text-white/78"
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.24, duration: 0.4 }}
+                    >
+                      {activeMember[6]}
+                    </motion.p>
+
+                    <motion.div
+                      className="mt-7 grid gap-4 sm:grid-cols-2"
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 0.42 }}
+                    >
+                      <div className=" p-5 backdrop-blur">
+                        <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-sky-100/80">
+                          Focus
+                        </p>
+                        <p className="mt-3 text-sm leading-7 text-white/76">
+                          {activeMember[2]}
+                        </p>
+                      </div>
+                      <div className=" p-5 backdrop-blur">
+                        <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-sky-100/80">
+                          Company
+                        </p>
+                        <p className="mt-3 text-sm font-extrabold text-white">
+                          {activeMember[4]}
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    <motion.a
+                      href={`https://${activeMember[5]}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-7 inline-flex max-w-full items-center gap-2 break-all rounded-full border border-sky-200/24 bg-[#0d5ee8] px-5 py-3 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[#176fff]"
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.36, duration: 0.42 }}
+                    >
+                      <FiLinkedin className="shrink-0" />
+                      {activeMember[5]}
+                    </motion.a>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
           document.body,
         )}
     </AnimatedSection>
