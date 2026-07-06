@@ -132,7 +132,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-between gap-5 pt-7 text-[0.92rem] font-medium text-white/58 md:flex-row md:items-center anim-fade-up anim-delay-5">
+        <div className="flex flex-col justify-between gap-5 pb-8 pt-7 text-[0.92rem] font-medium text-white/58 md:flex-row md:items-center md:pb-10 anim-fade-up anim-delay-5">
           <p>Copyright 2026 Coozter. All rights reserved.</p>
           <div className="flex flex-wrap gap-x-5 gap-y-2 md:justify-end">
             <Link
