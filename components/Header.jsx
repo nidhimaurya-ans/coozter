@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import BrandLogo from "./BrandLogo";
 import MagneticButton from "./MagneticButton";
-import ThemeToggle from "./ThemeToggle";
 
 const nav = [
   ["Home", "/"],
@@ -74,11 +73,9 @@ export default function Header() {
           ))}
         </div>
         <div className="hidden items-center gap-3 justify-self-end xl:flex anim-fade-down anim-delay-2">
-          {/* <ThemeToggle /> */}
           <MagneticButton href="/contact">Plan My Growth</MagneticButton>
         </div>
         <div className="flex items-center gap-2 justify-self-end xl:hidden">
-          {/* <ThemeToggle /> */}
           <button
             type="button"
             className="grid h-11 w-11 place-items-center text-ink"

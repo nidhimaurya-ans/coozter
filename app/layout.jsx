@@ -14,19 +14,6 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/assets/mainhero.jpg" as="image" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const stored = localStorage.getItem("coozter-theme");
-                const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                const theme = stored === "dark" || stored === "light" ? stored : systemDark ? "dark" : "light";
-                document.documentElement.classList.toggle("dark", theme === "dark");
-                document.documentElement.dataset.theme = theme;
-              } catch (_) {}
-            `,
-          }}
-        />
       </head>
       <body>
         <ScrollProgress />
