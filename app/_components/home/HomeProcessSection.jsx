@@ -18,7 +18,7 @@ const planningImages = [
 export default function HomeProcessSection() {
   return (
     <AnimatedSection className="container-pad py-5">
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1fr)] lg:items-center xl:gap-48">
+      <div className="grid gap-12 xl:grid-cols-[minmax(0,0.9fr)_minmax(420px,1fr)] xl:items-center xl:gap-48">
         <div
           className="relative min-h-[460px] lg:min-h-[640px]"
           role="img"

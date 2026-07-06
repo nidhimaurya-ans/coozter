@@ -12,13 +12,11 @@ export default function SectionHeader({
       className={`${isCenter ? "mx-auto text-center" : ""} max-w-4xl ${className}`}
     >
       {eyebrow ? (
-        <p
-          className={`eyebrow ${isCenter ? "justify-center" : ""}`}
-        >
+        <p className={`eyebrow ${isCenter ? "justify-center" : ""}`}>
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="mt-4 font-serif text-[2.35rem] font-medium leading-[1.04] text-ink sm:text-5xl md:text-6xl">
+      <h2 className="mt-4 font-serif text-[2.1rem] font-medium leading-[1.04] text-ink sm:text-3xl md:text-4xl">
         {title}
       </h2>
       {text ? (

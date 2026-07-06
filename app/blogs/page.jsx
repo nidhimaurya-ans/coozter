@@ -42,7 +42,7 @@ export default function BlogsPage() {
     <div className="flex flex-col gap-5">
       <section className="relative overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#eff9ff_42%,#dbeeff_100%)] pt-32 sm:pt-36 lg:pt-40">
         <div className="container-pad relative pb-5">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.96fr)_minmax(430px,0.86fr)] lg:items-center xl:gap-20">
+          <div className="grid gap-12 xl:grid-cols-[minmax(0,0.96fr)_minmax(430px,0.86fr)] xl:items-center xl:gap-20">
             <div className="anim-fade-up">
               <p className="mb-6 inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-moss">
                 <span className="h-px w-10 bg-coral anim-reveal-line" />
@@ -150,8 +150,8 @@ function BlogHeroVisual({ featured }) {
   const image = getBlogImage(featured.slug);
 
   return (
-    <div className="relative min-h-[470px] anim-blur-in anim-delay-2">
-      <div className="absolute right-0 top-0 h-[385px] w-[82%] overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_30px_90px_rgba(14,62,128,0.14)]">
+    <div className="relative min-h-[420px] anim-blur-in anim-delay-2 sm:min-h-[470px]">
+      <div className="absolute right-0 top-0 h-[310px] w-[92%] overflow-hidden rounded-[1.35rem] border border-white/80 bg-white shadow-[0_30px_90px_rgba(14,62,128,0.14)] sm:h-[385px] sm:w-[82%] sm:rounded-[2rem]">
         <div
           className="h-full bg-cover bg-center transition-transform duration-700 hover:scale-105"
           style={{ backgroundImage: `url(${image})` }}
@@ -164,13 +164,13 @@ function BlogHeroVisual({ featured }) {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-sky-100">
             {featured.category}
           </p>
-          <p className="max-w-md font-serif text-4xl leading-tight">
+          <p className="max-w-md font-serif text-2xl leading-tight sm:text-4xl">
             {featured.title}
           </p>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-0 w-[68%] rounded-[1.5rem] border border-white/80 bg-white/88 p-5 shadow-[0_24px_80px_rgba(14,62,128,0.12)] backdrop-blur anim-fade-up anim-delay-4">
+      <div className="absolute bottom-8 left-0 w-[86%] rounded-[1.2rem] border border-white/80 bg-white/88 p-4 shadow-[0_24px_80px_rgba(14,62,128,0.12)] backdrop-blur anim-fade-up anim-delay-4 sm:w-[68%] sm:rounded-[1.5rem] sm:p-5">
         <div className="flex items-center gap-3 text-moss">
           <span className="grid h-10 w-10 place-items-center rounded-full bg-coral/14">
             <FiTrendingUp size={18} />
@@ -217,7 +217,7 @@ function FeaturedArticle({ post }) {
         <p className="mt-5 max-w-xl text-base leading-8 text-ink/64">
           {post.excerpt}
         </p>
-        <div className="mt-7 flex items-center justify-between border-t border-slate-300/80 pt-5 text-sm">
+        <div className="mt-7 flex flex-col gap-4 border-t border-slate-300/80 pt-5 text-sm sm:flex-row sm:items-center sm:justify-between">
           <span className="font-semibold text-ink">By {post.author}</span>
           <Link
             href={`/blogs/${post.slug}`}

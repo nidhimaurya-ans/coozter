@@ -21,16 +21,22 @@ import SectionHeader from "./SectionHeader";
 export default function ServicesGrowthCanvas() {
   return (
     <>
-      <AnimatedSection className={`${sectionSpace} overflow-hidden`}>
-        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+      <AnimatedSection className={`${sectionSpace} overflow-hidden mt-8`}>
+        <div className="grid gap-12 xl:grid-cols-[0.82fr_1.18fr] xl:items-center">
           <SectionHeader
-           
             title="Marketing systems that move like one connected engine."
             text="Every channel has a role: attract demand, shape trust, capture intent, and report what should happen next."
           />
 
-          <MotionItem direction="left" className="relative min-h-[32rem]">
-            <div className="" aria-label="Connected marketing growth system visual" role="img">
+          <MotionItem
+            direction="left"
+            className="growth-canvas-stage relative mt-10 min-h-[24rem] sm:min-h-[30rem] lg:min-h-[32rem]"
+          >
+            <div
+              className="absolute inset-0"
+              aria-label="Connected marketing growth system visual"
+              role="img"
+            >
               <span className="growth-canvas-ring growth-canvas-ring-one" />
               <span className="growth-canvas-ring growth-canvas-ring-two" />
               <div className="growth-canvas-core">
@@ -60,15 +66,15 @@ export default function ServicesGrowthCanvas() {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection className={sectionSpace}>
+      <AnimatedSection className={`${sectionSpace} mt-10 overflow-hidden`}>
         <SectionHeader
           align="center"
-          eyebrow="Outcomes"
+          // eyebrow="Outcomes"
           title="Marketing That Moves Real Business Metrics"
           text="We focus on outcomes that matter, not vanity metrics."
         />
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-start">
+        <div className="mt-14 grid gap-8 xl:grid-cols-[1fr_0.72fr] xl:items-start">
           <div className="space-y-7">
             {achievementBlocks.map(([Icon, title, text], index) => (
               <MotionItem
@@ -94,34 +100,43 @@ export default function ServicesGrowthCanvas() {
 
           <MotionItem direction="left" className="metric-sculpture">
             {metrics.map(([value, label], index) => (
-              <span key={label} className={`metric-bubble metric-bubble-pos-${index + 1}`}>
-                <strong>{value}</strong>
-                <small>{label}</small>
+              <span
+                key={label}
+                className={`metric-bubble metric-bubble-pos-${index + 1}`}
+              >
+                <span className="metric-bubble-content">
+                  <strong>{value}</strong>
+                  <small>{label}</small>
+                </span>
               </span>
             ))}
           </MotionItem>
         </div>
       </AnimatedSection>
 
-      <AnimatedSection className={sectionSpace}>
+      {/* <AnimatedSection className={sectionSpace}>
         <SectionHeader
           align="center"
-          eyebrow="Service depth"
+          // eyebrow="Service depth"
           title="Detailed Digital Marketing Services"
           text="Each service is built around clearer visibility, better leads, stronger conversion paths, and reporting your team can actually use."
         />
 
         <div className="mt-16 space-y-16">
           {detailedServices.map((service, index) => (
-            <ServiceFlowBlock key={service.title} service={service} index={index} />
+            <ServiceFlowBlock
+              key={service.title}
+              service={service}
+              index={index}
+            />
           ))}
         </div>
-      </AnimatedSection>
+      </AnimatedSection> */}
 
-      <AnimatedSection className={sectionSpace}>
-        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr]">
+      <AnimatedSection className={`${sectionSpace}  mt-15`}>
+        <div className="grid gap-12 xl:grid-cols-[0.82fr_1.18fr]">
           <SectionHeader
-            eyebrow="How we work"
+            // eyebrow="How we work"
             title="Our Simple Growth Process"
             text="A clear process keeps strategy, execution, and reporting moving in the same direction."
           />
@@ -206,7 +221,7 @@ export default function ServicesGrowthCanvas() {
           ))}
         </div>
       </AnimatedSection> */}
-{/* 
+      {/* 
       <AnimatedSection className={sectionSpace}>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <SectionHeader
@@ -325,7 +340,7 @@ function ServiceFlowBlock({ service, index }) {
           {service.bestFor.map((chip, chipIndex) => (
             <span
               key={chip}
-                    className="motion-drift ui-pill"
+              className="motion-drift ui-pill"
               style={{ animationDelay: `${chipIndex * 0.14}s` }}
             >
               {chip}
@@ -349,7 +364,10 @@ function ServiceFlowBlock({ service, index }) {
               className="flex items-start gap-2 text-sm leading-6 text-ink/68"
               style={{ transform: `translateX(${itemIndex % 2 ? 14 : 0}px)` }}
             >
-              <FiCheckCircle className="mt-1 shrink-0 text-blue-600" size={15} />
+              <FiCheckCircle
+                className="mt-1 shrink-0 text-blue-600"
+                size={15}
+              />
               {item}
             </span>
           ))}

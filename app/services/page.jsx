@@ -8,7 +8,7 @@ export const metadata = { title: "Services | Coozter" };
 
 export default function ServicesPage() {
   return (
-    <div className="services-page-static-text flex flex-col gap-5">
+    <div className="services-page-static-text flex flex-col">
       <ServicesHero />
       <ServiceCategoriesSection />
       <ServicesGrowthCanvas />

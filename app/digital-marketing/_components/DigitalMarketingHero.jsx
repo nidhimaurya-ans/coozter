@@ -5,7 +5,7 @@ import { channelTabs } from "@/data/services";
 export default function DigitalMarketingHero() {
   return (
     <section className="container-pad pt-32 sm:pt-36 lg:pt-40">
-      <div className="grid gap-12 border-y border-slate-300/80 py-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center xl:gap-20">
+      <div className="grid gap-12 border-y border-slate-300/80 py-12 xl:grid-cols-[0.95fr_1.05fr] xl:items-center xl:gap-20">
         <div className="anim-fade-up">
           <p className="eyebrow inline-flex items-center gap-3 text-moss">
             <span className="h-px w-9 bg-coral anim-reveal-line" />

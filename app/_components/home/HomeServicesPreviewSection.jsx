@@ -14,11 +14,9 @@ export default function HomeServicesPreviewSection() {
       <section className="relative overflow-hidden ">
         <div className="pointer-events-none absolute right-[-7rem] top-1/2 h-80 w-80 -translate-y-1/2 rounded-full border border-moss/12 anim-rotate-slow" />
 
-        <div className="relative z-10 grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-center">
+        <div className="relative z-10 grid gap-10 xl:grid-cols-[0.38fr_0.62fr] xl:items-center">
           <div className="anim-left-to-right">
-            {/* <p className="inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-moss">
-              Services preview
-            </p> */}
+          
             <h2 className=" max-w-[18ch] font-serif text-[2.35rem] font-medium leading-[0.98] text-ink sm:text-5xl">
               One growth system, many connected moves.
             </h2>
@@ -48,17 +46,7 @@ export default function HomeServicesPreviewSection() {
           </div>
 
           <div className="relative">
-            {/* <div className="absolute left-[1.15rem] top-8 bottom-8 hidden w-px bg-[linear-gradient(180deg,transparent,var(--theme-primary),var(--theme-accent),var(--theme-primary),transparent)] opacity-35 md:block" /> */}
-            {/* Moving pointer concept paused:
-            <motion.span
-              className="absolute left-[0.72rem] top-8 z-20 hidden h-8 w-3 rounded-full border border-white/70 bg-[linear-gradient(180deg,var(--theme-accent),var(--theme-primary))] shadow-[0_10px_28px_rgba(37,99,235,0.34),0_0_18px_rgba(56,189,248,0.52)] md:block"
-              animate={{ top: ["2rem", "24%", "45%", "66%", "calc(100% - 2.5rem)"] }}
-              transition={{ duration: 11, ease: [0.22, 1, 0.36, 1], repeat: Infinity, repeatDelay: 0.45 }}
-            >
-              <span className="absolute left-1/2 top-1 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-white/95" />
-              <span className="absolute left-1/2 top-full h-8 w-px -translate-x-1/2 bg-[linear-gradient(180deg,rgba(56,189,248,0.55),transparent)]" />
-            </motion.span>
-            */}
+            
             <div className="grid gap-3">
               {previewServices.map((service, index) => (
                 <Link

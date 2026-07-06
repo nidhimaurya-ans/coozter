@@ -97,11 +97,11 @@ export default function HomeTestimonialsSection() {
               <FiChevronRight />
             </button>
 
-            <div className="flex w-max gap-5 pl-16 [animation:marquee-flow_42s_linear_infinite] hover:[animation-play-state:paused]">
+            <div className="flex w-max gap-4 pl-12 [animation:marquee-flow_42s_linear_infinite] hover:[animation-play-state:paused] sm:gap-5 sm:pl-16">
               {reviewGroups.map((group, groupIndex) => (
                 <div
                   key={groupIndex}
-                  className="grid w-[57rem] shrink-0 grid-cols-[0.9fr_1.18fr_0.9fr] items-center gap-5"
+                  className="grid w-[84vw] max-w-[57rem] shrink-0 grid-cols-1 items-stretch gap-4 sm:w-[44rem] sm:grid-cols-3 sm:items-center sm:gap-5 lg:w-[57rem]"
                 >
                   {group.map((item, index) => {
                     const featured = index === 1;
@@ -111,8 +111,8 @@ export default function HomeTestimonialsSection() {
                         key={`${item.name}-${groupIndex}-${index}`}
                         className={`flex flex-col justify-between rounded-2xl border backdrop-blur ${
                           featured
-                            ? "min-h-[39rem] border-blue-400 bg-blue-950/34 p-9 shadow-[0_0_52px_rgba(37,99,235,0.5)]"
-                            : "min-h-[32rem] border-white/14 bg-white/5 p-7 shadow-[0_0_40px_rgba(2,6,23,0.16)]"
+                            ? "min-h-[24rem] border-blue-400 bg-blue-950/34 p-6 shadow-[0_0_52px_rgba(37,99,235,0.5)] sm:min-h-[36rem] sm:p-7 lg:min-h-[39rem] lg:p-9"
+                            : "min-h-[22rem] border-white/14 bg-white/5 p-6 shadow-[0_0_40px_rgba(2,6,23,0.16)] sm:min-h-[30rem] sm:p-6 lg:min-h-[32rem] lg:p-7"
                         }`}
                       >
                         <div>
@@ -121,7 +121,7 @@ export default function HomeTestimonialsSection() {
                           </div>
                           <blockquote
                             className={`mt-4 leading-8 text-white ${
-                              featured ? "text-[1.55rem] leading-10" : "text-lg"
+                              featured ? "text-xl sm:text-[1.35rem] lg:text-[1.55rem] lg:leading-10" : "text-base sm:text-lg"
                             }`}
                           >
                             {item.quote}
@@ -172,8 +172,8 @@ export default function HomeTestimonialsSection() {
           </div>
         </div>
 
-        <div className="mt-14 grid gap-7 rounded-2xl border border-white/14 bg-white/5 p-7 backdrop-blur md:grid-cols-[1fr_auto] md:items-center">
-          <div className="flex items-center gap-6">
+        <div className="mt-14 grid gap-7 rounded-2xl border border-white/14 bg-white/5 p-5 backdrop-blur md:grid-cols-[1fr_auto] md:items-center md:p-7">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
             <span className="grid h-20 w-20 shrink-0 place-items-center rounded-full border border-blue-400/38 bg-blue-500/14 text-4xl text-blue-300">
               <FiMessageCircle />
             </span>
@@ -188,7 +188,7 @@ export default function HomeTestimonialsSection() {
           </div>
           <a
             href="/contact"
-            className="inline-flex min-h-16 items-center justify-center gap-4 rounded-xl bg-blue-600 px-10 text-lg font-bold text-white shadow-[0_18px_54px_rgba(37,99,235,0.32)] transition hover:-translate-y-1 hover:bg-blue-500"
+            className="inline-flex min-h-14 items-center justify-center gap-4 rounded-xl bg-blue-600 px-6 text-base font-bold text-white shadow-[0_18px_54px_rgba(37,99,235,0.32)] transition hover:-translate-y-1 hover:bg-blue-500 sm:min-h-16 sm:px-10 sm:text-lg"
           >
             Plan My Growth
             <FiArrowUpRight />

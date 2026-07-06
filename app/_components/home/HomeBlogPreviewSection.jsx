@@ -30,10 +30,10 @@ export default function HomeBlogPreviewSection() {
           </Link>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
+        <div className="grid gap-5 xl:grid-cols-[0.92fr_1.08fr] xl:items-stretch">
           <Link
             href={`/blogs/${featured.slug}`}
-            className="group relative min-h-[25rem] overflow-hidden rounded-[1.25rem] border border-slate-300/80 bg-white shadow-soft anim-hero-zoom-out"
+            className="group relative min-h-[25rem] overflow-hidden rounded-[1.25rem] border border-slate-300/80 bg-white  anim-hero-zoom-out"
           >
             <div
               className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
@@ -63,7 +63,7 @@ export default function HomeBlogPreviewSection() {
               <Link
                 key={post.slug}
                 href={`/blogs/${post.slug}`}
-                className={`group relative min-h-[25rem] overflow-hidden rounded-[1.25rem] border border-slate-300/80 bg-white shadow-soft transition hover:-translate-y-1 anim-${index === 0 ? "blur-in" : "slide-left"} anim-delay-${index + 2}`}
+                className={`group relative min-h-[25rem] overflow-hidden rounded-[1.25rem] border border-slate-300/80 bg-white  transition hover:-translate-y-1 anim-${index === 0 ? "blur-in" : "slide-left"} anim-delay-${index + 2}`}
               >
                 <div
                   className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"

@@ -16,7 +16,7 @@ export default function AboutHero() {
             About Coozter
           </p>
 
-          <h1 className="max-w-4xl font-serif text-[2.18rem] leading-[0.98] text-white sm:text-6xl md:text-7xl lg:text-[5.8rem]">
+          <h1 className="max-w-4xl font-serif text-[2.18rem] leading-[0.98] text-white sm:text-6xl md:text-7xl lg:text-[4.8rem]">
             We help brands build, launch, and scale digital products
           </h1>
         </div>

@@ -16,7 +16,7 @@ const initial = {
   message: "",
 };
 
-export default function ContactForm() {
+export default function ContactForm({ className = "" }) {
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(false);
@@ -78,19 +78,22 @@ export default function ContactForm() {
       );
       setForm(initial);
     } catch (error) {
-      const emailError = error?.text || error?.message || "Unknown EmailJS error";
+      const emailError =
+        error?.text || error?.message || "Unknown EmailJS error";
       setStatus("error");
-      setSubmitMessage(
-        `EmailJS error: ${emailError}`,
-      );
+      setSubmitMessage(`EmailJS error: ${emailError}`);
       console.error("EmailJS send failed:", error);
     }
   }
 
   const inputClass =
-    "peer h-[62px] w-full rounded-2xl border border-slate-300/80 bg-white px-4 pb-3 pt-6 text-ink outline-none transition placeholder:text-transparent focus:border-coral focus:shadow-[0_14px_38px_rgba(43,188,255,0.12)]";
+    "peer h-[62px] w-full rounded-2xl border border-slate-300/80 bg-white px-4 pb-3 pt-6 font-sans font-medium outline-none transition placeholder:text-[#111827] focus:border-coral focus:shadow-[0_14px_38px_rgba(43,188,255,0.12)]";
   const selectClass =
-    "peer h-[62px] w-full rounded-2xl border border-slate-300/80 bg-white px-4 pb-2 pt-6 text-ink outline-none transition focus:border-coral focus:shadow-[0_14px_38px_rgba(43,188,255,0.12)]";
+    "h-[62px] w-full rounded-2xl border border-slate-300/80 bg-white px-4 font-sans font-medium outline-none transition focus:border-coral focus:shadow-[0_14px_38px_rgba(43,188,255,0.12)]";
+  const controlStyle = {
+    "--theme-input-placeholder": "#111827",
+    "--theme-input-text": "#111827",
+  };
   const fields = [
     ["name", "Full Name", "text"],
     ["email", "Work Email", "email"],
@@ -102,7 +105,11 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={submit}
-      className="rounded-[2rem] border border-slate-300/80 bg-white p-5 shadow-[0_24px_80px_rgba(14,62,128,0.09)] md:p-8"
+      className={`rounded-[2rem] border border-slate-300/80 bg-white p-5 font-sans font-medium shadow-[0_24px_80px_rgba(14,62,128,0.09)] md:p-8 ${className}`}
+      style={{
+        "--theme-input-placeholder": "#111827",
+        "--theme-input-text": "#111827",
+      }}
     >
       <div className="mb-7 border-b border-slate-300/80 pb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-moss">
@@ -124,21 +131,24 @@ export default function ContactForm() {
               value={form[field]}
               onChange={(e) => update(field, e.target.value)}
               placeholder=" "
+              style={controlStyle}
             />
-            <span className="pointer-events-none absolute left-4 top-2 text-xs text-ink/50 transition peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-coral">
+            <span className="pointer-events-none absolute left-4 top-2 font-sans text-xs font-medium text-[#111827] transition peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#111827]">
               {label}
             </span>
             <Error text={errors[field]} />
           </label>
         ))}
-        <label className="relative block">
-          <span className="pointer-events-none absolute left-4 top-2 z-10 text-xs text-ink/50">
+
+        <label className="block">
+          <span className="mb-2 block font-sans text-sm font-medium text-[#111827]">
             Service Interest
           </span>
           <select
             className={selectClass}
             value={form.interest}
             onChange={(e) => update("interest", e.target.value)}
+            style={controlStyle}
           >
             <option value="">Select one</option>
             <option>Affiliate Branding</option>
@@ -148,14 +158,15 @@ export default function ContactForm() {
           </select>
           <Error text={errors.interest} />
         </label>
-        <label className="relative block">
-          <span className="pointer-events-none absolute left-4 top-2 z-10 text-xs text-ink/50">
+        <label className="block">
+          <span className="mb-2 block font-sans text-sm font-medium text-[#111827]">
             Monthly Marketing Budget
           </span>
           <select
             className={selectClass}
             value={form.budget}
             onChange={(e) => update("budget", e.target.value)}
+            style={controlStyle}
           >
             <option value="">Select range</option>
             <option>$3k-$7k</option>
@@ -166,17 +177,19 @@ export default function ContactForm() {
         </label>
       </div>
       <label className="mt-5 block">
-        <span className="mb-2 block text-sm font-semibold text-ink/55">
+        <span className="mb-2 block font-sans text-sm font-medium text-[#111827]">
           Message
         </span>
         <textarea
-          className="min-h-36 w-full rounded-2xl border border-slate-300/80 bg-white p-4 text-ink outline-none transition focus:border-coral focus:shadow-[0_14px_38px_rgba(43,188,255,0.12)]"
+          className="min-h-36 w-full rounded-2xl border border-slate-300/80 bg-white p-4 font-sans font-medium outline-none transition placeholder:text-[#111827] focus:border-coral focus:shadow-[0_14px_38px_rgba(43,188,255,0.12)]"
           value={form.message}
           onChange={(e) => update("message", e.target.value)}
+          placeholder="Type your message"
+          style={controlStyle}
         />
         <Error text={errors.message} />
       </label>
-      <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center cursor-pointer">
         <MagneticButton>
           {status === "sending" ? "Sending..." : "Send the Brief"}
         </MagneticButton>
@@ -205,7 +218,7 @@ function Error({ text }) {
     <AnimatePresence>
       {text && (
         <motion.span
-          className="mt-2 block text-sm text-coral"
+          className="mt-2 block text-sm font-semibold text-red-600"
           initial={{ opacity: 0, y: -3 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}

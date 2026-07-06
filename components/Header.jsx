@@ -31,12 +31,19 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header
       className={`site-header fixed left-0 right-0 top-0 z-50 border-b transition-all duration-300 ${scrolled ? "is-scrolled py-3" : "py-4"}`}
     >
       <nav
-        className="container-pad grid grid-cols-[auto_auto] items-center gap-5 lg:grid-cols-[auto_1fr_auto]"
+        className="container-pad grid grid-cols-[auto_auto] items-center gap-5 xl:grid-cols-[auto_1fr_auto]"
         aria-label="Primary"
       >
         <Link
@@ -46,7 +53,7 @@ export default function Header() {
         >
           <BrandLogo />
         </Link>
-        <div className="hidden min-w-0 items-center justify-center gap-7 justify-self-center lg:flex anim-fade-down anim-delay-1">
+        <div className="hidden min-w-0 items-center justify-center gap-7 justify-self-center xl:flex anim-fade-down anim-delay-1">
           {nav.map(([label, href]) => (
             <Link
               key={href}
@@ -66,11 +73,11 @@ export default function Header() {
             </Link>
           ))}
         </div>
-        <div className="hidden items-center gap-3 justify-self-end lg:flex anim-fade-down anim-delay-2">
+        <div className="hidden items-center gap-3 justify-self-end xl:flex anim-fade-down anim-delay-2">
           {/* <ThemeToggle /> */}
           <MagneticButton href="/contact">Plan My Growth</MagneticButton>
         </div>
-        <div className="flex items-center gap-2 justify-self-end lg:hidden">
+        <div className="flex items-center gap-2 justify-self-end xl:hidden">
           {/* <ThemeToggle /> */}
           <button
             type="button"
@@ -85,15 +92,15 @@ export default function Header() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[999] bg-ink/30 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[999] bg-[rgba(7,27,51,0.42)] backdrop-blur-sm xl:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative z-[1000] ml-auto flex h-full w-[88%] max-w-sm flex-col p-6 shadow-2xl"
+              className="mobile-menu-panel relative z-[1000] ml-auto flex h-[100dvh] w-full max-w-sm flex-col overflow-y-auto border-l border-[var(--theme-border)] p-6"
               style={{
-                backgroundColor: "var(--theme-card)",
+                backgroundColor: "var(--theme-navbar-solid)",
                 color: "var(--theme-text-primary)",
               }}
               initial={{ x: "100%" }}

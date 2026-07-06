@@ -11,8 +11,8 @@ export default function WorkModelSection() {
         How we work
       </p>
 
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,1.02fr)_minmax(440px,0.98fr)] lg:items-center xl:gap-20">
-        <div className="relative min-h-[380px] overflow-hidden anim-scale-in lg:min-h-[580px]">
+      <div className="grid gap-12 xl:grid-cols-[minmax(0,1.02fr)_minmax(440px,0.98fr)] xl:items-center xl:gap-20">
+        <div className="relative min-h-[380px] overflow-hidden anim-scale-in xl:min-h-[580px]">
           <div
             className="absolute inset-0 about-3d-scene"
             aria-label="Animated 3D workflow showing partner, search, campaign, and reporting signals"

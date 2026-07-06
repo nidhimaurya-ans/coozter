@@ -6,12 +6,19 @@ import {
   teamMembers,
 } from "../_data/aboutContent";
 
+const imageAnimations = [
+  "anim-scale-in",
+  "anim-slide-right",
+  "anim-fade-up",
+  "anim-slide-left",
+];
+
 export default function TeamShowcaseSection() {
   return (
     <AnimatedSection className={sectionSpace}>
       <div className="grid">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,0.7fr)] lg:items-start">
-          <div className="anim-fade-up lg:max-w-4xl">
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,0.92fr)_minmax(420px,0.7fr)] xl:items-start">
+          <div className="anim-slide-left lg:max-w-4xl">
             <p className="eyebrow inline-flex items-center gap-3 text-moss">
               <span className="h-px w-9 bg-coral anim-reveal-line" />
               Meet our team
@@ -29,7 +36,7 @@ export default function TeamShowcaseSection() {
         </div>
 
         <div
-          className={`grid gap-9   lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.62fr)] lg:items-center`}
+          className={`grid gap-9 xl:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.62fr)] xl:items-center`}
         >
           <div className="team-3d-stage ">
             <div className="team-3d-ring" />
@@ -41,7 +48,12 @@ export default function TeamShowcaseSection() {
                 key={name}
                 className={`team-3d-person team-3d-person-${index + 1}`}
               >
-                <div className="team-3d-frame">
+                <div
+                  className={`team-3d-frame ${imageAnimations[index] ?? "anim-fade-up"} anim-delay-${Math.min(
+                    index + 1,
+                    5,
+                  )}`}
+                >
                   <div
                     aria-label={`${name}, ${role} at Coozter`}
                     role="img"
