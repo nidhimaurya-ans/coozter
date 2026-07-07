@@ -111,7 +111,7 @@ export default function HomeHeroSection() {
           </div>
         </div>
 
-        <div className="relative z-10 mt-8 h-[260px] overflow-hidden lg:hidden">
+        <div className="relative z-4  h-[260px] overflow-hidden lg:hidden">
           <img
             className="anim-hero-zoom-out mx-auto h-full w-full object-contain opacity-100"
             src="/assets/digital-marketing-services.svg"

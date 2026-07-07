@@ -8,7 +8,7 @@ import {
   teamMembers,
 } from "../_data/aboutContent";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { FiLinkedin, FiX } from "react-icons/fi";
 
@@ -22,10 +22,30 @@ const imageAnimations = [
 export default function TeamShowcaseSection() {
   const [activeMember, setActiveMember] = useState(null);
   const [mounted, setMounted] = useState(false);
+  const closeTimer = useRef(null);
 
   useEffect(() => {
     setMounted(true);
+    return () => {
+      if (closeTimer.current) {
+        clearTimeout(closeTimer.current);
+      }
+    };
   }, []);
+
+  const openMember = (member) => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+    }
+    setActiveMember(member);
+  };
+
+  const closeMember = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+    }
+    closeTimer.current = setTimeout(() => setActiveMember(null), 140);
+  };
 
   return (
     <AnimatedSection className={sectionSpace}>
@@ -63,10 +83,10 @@ export default function TeamShowcaseSection() {
                   key={name}
                   className={`team-3d-person team-3d-person-${index + 1} cursor-pointer focus:z-[60] hover:z-[60]`}
                   tabIndex={0}
-                  onMouseEnter={() => setActiveMember(member)}
-                  onMouseLeave={() => setActiveMember(null)}
-                  onFocus={() => setActiveMember(member)}
-                  onClick={() => setActiveMember(member)}
+                  onMouseEnter={() => openMember(member)}
+                  onMouseLeave={closeMember}
+                  onFocus={() => openMember(member)}
+                  onClick={() => openMember(member)}
                 >
                   <div
                     className={`team-3d-frame ${imageAnimations[index] ?? "anim-fade-up"} anim-delay-${Math.min(
@@ -138,9 +158,14 @@ export default function TeamShowcaseSection() {
                 transition={{ duration: 0.22, ease: "easeOut" }}
               >
                 <motion.div
-                  className="pointer-events-auto relative grid w-full max-w-5xl overflow-hidden rounded-[1.35rem] border border-sky-200/28 bg-[linear-gradient(135deg,#061a2f_0%,#071b33_48%,#0d55b0_100%)] text-white shadow-[0_34px_120px_rgba(2,12,32,0.54)] md:grid-cols-[0.88fr_1.12fr]"
+                  className="pointer-events-auto relative grid max-h-[calc(100dvh-3rem)] w-full max-w-5xl overflow-y-auto rounded-[1.35rem] border border-sky-200/28 bg-[linear-gradient(135deg,#061a2f_0%,#071b33_48%,#0d55b0_100%)] text-white shadow-[0_34px_120px_rgba(2,12,32,0.54)] md:grid-cols-[0.88fr_1.12fr]"
                   onClick={(event) => event.stopPropagation()}
-                  onMouseLeave={() => setActiveMember(null)}
+                  onMouseEnter={() => {
+                    if (closeTimer.current) {
+                      clearTimeout(closeTimer.current);
+                    }
+                  }}
+                  onMouseLeave={closeMember}
                   initial={{ opacity: 0, y: 34, scale: 0.94 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 24, scale: 0.96 }}
