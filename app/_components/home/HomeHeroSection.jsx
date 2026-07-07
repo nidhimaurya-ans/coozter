@@ -62,9 +62,9 @@ export default function HomeHeroSection() {
   ];
 
   return (
-    <section className="relative isolate min-h-[620px] overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#f8fbff_46%,#e8f5ff_100%)] pt-28 text-ink sm:pt-32 lg:h-[670px] lg:min-h-[670px] lg:pt-0">
+    <section className="relative isolate min-h-[620px] overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#f8fbff_46%,#e8f5ff_100%)] pt-28 text-ink sm:pt-32 xl:h-[670px] xl:min-h-[670px] xl:pt-0">
       <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_78%_48%,rgba(43,188,255,0.18),transparent_30rem),radial-gradient(circle_at_18%_18%,rgba(13,94,232,0.1),transparent_24rem)]" />
-      <div className="pointer-events-none absolute right-[-4rem] top-[7rem] z-0 hidden h-[520px] w-[680px] overflow-visible lg:block xl:right-[-1rem] xl:w-[760px]">
+      <div className="pointer-events-none absolute right-[-10rem] bottom-[-1.25rem] z-0 hidden h-[520px] w-[630px] overflow-visible xl:block 2xl:right-[max(-3rem,calc((100vw-1280px)/2-4rem))] 2xl:h-[548px] 2xl:w-[700px]">
         <img
           className="anim-hero-zoom-out h-full w-full object-contain opacity-100"
           src="/assets/digital-marketing-services.svg"
@@ -74,7 +74,7 @@ export default function HomeHeroSection() {
       </div>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-blue-100" />
 
-      <div className="mx-auto flex min-h-[492px] w-full max-w-[1280px] flex-col justify-between px-5 pb-8 sm:px-8 lg:h-full lg:min-h-0 lg:px-[54px] lg:pb-[78px] lg:pt-[138px]">
+      <div className="mx-auto flex min-h-[492px] w-full max-w-[1280px] flex-col justify-between px-5 pb-8 sm:px-8 lg:px-10 xl:h-full xl:min-h-0 xl:px-[54px] xl:pb-[78px] xl:pt-[138px]">
         <div className="relative z-20 max-w-[540px]">
           <p className="mb-[14px] anim-left-to-right text-[0.68rem] font-extrabold uppercase tracking-[0.13em] text-[#0d5ee8] sm:text-[0.7rem] lg:text-[11px]">
             Affiliate Marketing & Performance Growth Agency
@@ -111,16 +111,16 @@ export default function HomeHeroSection() {
           </div>
         </div>
 
-        <div className="relative z-4  h-[260px] overflow-hidden lg:hidden">
+        <div className="relative z-10 h-[310px] overflow-visible sm:h-[350px] md:h-[400px] lg:h-[440px] xl:hidden">
           <img
-            className="anim-hero-zoom-out mx-auto h-full w-full object-contain opacity-100"
+            className="anim-hero-zoom-out mx-auto h-full w-full translate-y-4 object-contain opacity-100 sm:translate-y-5"
             src="/assets/digital-marketing-services.svg"
             alt=""
             aria-hidden="true"
           />
         </div>
 
-        <div className="relative z-20 mb-6 mt-8 grid grid-cols-2 gap-4 lg:mb-8 lg:mt-10 lg:w-[760px] lg:grid-cols-4 lg:gap-0">
+        <div className="relative z-20 mb-6 mt-5 grid grid-cols-2 gap-4 lg:mb-8 lg:mt-8 lg:w-[760px] lg:grid-cols-4 lg:gap-0">
           {metrics.map(({ value, label, icon: Icon }, index) => (
             <div
               key={label}
