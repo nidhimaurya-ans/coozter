@@ -25,8 +25,10 @@ export default function TeamShowcaseSection() {
   const closeTimer = useRef(null);
 
   useEffect(() => {
-    setMounted(true);
+    const frame = requestAnimationFrame(() => setMounted(true));
+
     return () => {
+      cancelAnimationFrame(frame);
       if (closeTimer.current) {
         clearTimeout(closeTimer.current);
       }

@@ -87,15 +87,6 @@ export default function BlogsPage() {
                       }`}
                     >
                       {item}
-                      {/* <span
-                        className={`rounded-full px-2 py-0.5 text-[0.68rem] ${
-                          category === item
-                            ? "bg-white/14 text-white/80"
-                            : "bg-moss/8 text-moss"
-                        }`}
-                      >
-                        {categoryCounts[item]}
-                      </span> */}
                     </button>
                   ))}
                 </div>
@@ -173,7 +164,7 @@ function BlogHeroVisual({ featured }) {
       <div className="absolute bottom-6 left-0 w-[88%] rounded-[1.2rem] border border-white/80 bg-white/90 p-4 shadow-[0_24px_80px_rgba(14,62,128,0.12)] backdrop-blur anim-fade-up anim-delay-4 sm:w-[70%] sm:rounded-[1.35rem] sm:p-5">
         <div className="flex items-center gap-3 text-moss">
           <span className="grid h-10 w-10 place-items-center rounded-full bg-coral/14">
-            <FiTrendingUp size={18} />
+            <FiTrendingUp size={18} className="text-white" />
           </span>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.14em]">
@@ -207,13 +198,13 @@ function FeaturedArticle({ post }) {
       <BlogThumb post={post} featured />
       <div className="flex min-h-full flex-col justify-center p-6 sm:p-8 lg:p-10">
         <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs uppercase tracking-[0.12em] text-ink/45">
-          <span className="rounded-full bg-coral/14 px-3 py-1 font-semibold text-moss">
+          <span className="rounded-full bg-white px-3 py-1 font-semibold text-blue-500">
             {post.category}
           </span>
           <span>{post.readTime}</span>
           <span>{post.date}</span>
         </div>
-        <h2 className="max-w-[13ch] font-serif text-4xl leading-tight text-ink md:text-[3.35rem]">
+        <h2 className=" font-serif text-4xl leading-tight text-ink md:text-[3.35rem]">
           <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
         </h2>
         <p className="mt-5 max-w-xl text-base leading-8 text-ink/64">
@@ -242,7 +233,7 @@ function ArticleCard({ post, index }) {
       <BlogThumb post={post} />
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.68rem] uppercase tracking-[0.12em] text-ink/45">
-          <span className="rounded-full bg-coral/14 px-3 py-1 font-semibold text-moss">
+          <span className="rounded-full bg-white/88 px-3 py-1 font-semibold text-moss border border-gray-300">
             {post.category}
           </span>
           <span>{post.readTime}</span>
