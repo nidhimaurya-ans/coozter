@@ -7,12 +7,27 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { blogs } from "@/data/blogs";
-import { getBlogBySlug, getPublishedBlogs } from "@/src/services/blogService";
-import { getBlogPageContent } from "@/src/services/blogPageService";
 import CopyLinkButton from "../_components/CopyLinkButton";
 import { getBlogImage } from "../_data/blogImages";
 
 export const dynamic = "force-dynamic";
+
+const fallbackBlogPageContent = {
+  buttons: {
+    backButtonLabel: "Back to articles",
+  },
+  detail: {
+    fieldNoteBadge: "Field note",
+    defaultExtraParagraph:
+      "In practice, this means naming the decision you want the asset or campaign to support. If the answer is vague, the work will drift. If the answer is clear, the channel has something useful to do.",
+    copyLinkLabel: "Copy link",
+    recentTitle: "Recent articles",
+    related: {
+      allArticlesLabel: "All articles",
+      title: "Related articles",
+    },
+  },
+};
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -219,6 +234,8 @@ function RelatedArticle({ post }) {
 
 async function loadBlog(slug) {
   try {
+    const { getBlogBySlug } = await import("@/src/services/blogService");
+
     return (
       (await getBlogBySlug(slug)) ||
       blogs.find((item) => item.slug === slug) ||
@@ -232,6 +249,7 @@ async function loadBlog(slug) {
 
 async function loadBlogs() {
   try {
+    const { getPublishedBlogs } = await import("@/src/services/blogService");
     const firebaseBlogs = await getPublishedBlogs();
     return firebaseBlogs.length > 0 ? firebaseBlogs : blogs;
   } catch (error) {
@@ -242,10 +260,10 @@ async function loadBlogs() {
 
 async function loadBlogPageContent() {
   try {
+    const { getBlogPageContent } = await import("@/src/services/blogPageService");
     return await getBlogPageContent();
   } catch (error) {
     console.error("Unable to load Firebase blog page content", error);
-    const { defaultBlogPageContent } = await import("@/src/services/blogPageService");
-    return defaultBlogPageContent;
+    return fallbackBlogPageContent;
   }
 }
