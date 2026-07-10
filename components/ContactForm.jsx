@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import MagneticButton from "./MagneticButton";
@@ -16,6 +16,41 @@ const initial = {
   message: "",
 };
 
+function cleanText(value) {
+  return String(value || "").trim();
+}
+
+async function submitContactLead(form) {
+  const response = await fetch("/api/contact-leads", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: cleanText(form.name),
+      email: cleanText(form.email),
+      phone: cleanText(form.phone),
+      company: cleanText(form.company),
+      website: cleanText(form.website),
+      interest: cleanText(form.interest),
+      budget: cleanText(form.budget),
+      message: cleanText(form.message),
+    }),
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.message ||
+        Object.values(payload?.errors || {})[0] ||
+        "Unable to submit your brief.",
+    );
+  }
+
+  return payload;
+}
+
 export default function ContactForm({ className = "" }) {
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});
@@ -23,14 +58,29 @@ export default function ContactForm({ className = "" }) {
   const [status, setStatus] = useState("idle");
   const [submitMessage, setSubmitMessage] = useState("");
 
+  useEffect(() => {
+    if (status !== "success" || !submitMessage) return;
+
+    const timer = window.setTimeout(() => {
+      setSent(false);
+      setStatus("idle");
+      setSubmitMessage("");
+    }, 2000);
+
+    return () => window.clearTimeout(timer);
+  }, [status, submitMessage]);
+
   function update(field, value) {
     setForm((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: "" }));
+    setSent(false);
     setSubmitMessage("");
   }
 
   async function submit(e) {
     e.preventDefault();
+    if (status === "sending") return;
+
     const next = {};
     ["name", "email", "company", "interest", "message"].forEach((field) => {
       if (!form[field]) next[field] = "Required";
@@ -40,49 +90,50 @@ export default function ContactForm({ className = "" }) {
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setStatus("error");
-      setSubmitMessage(
-        "Email is not connected yet. Add your EmailJS keys in .env.local.",
-      );
-      return;
-    }
-
     setStatus("sending");
     setSubmitMessage("");
 
     try {
-      await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          from_name: form.name,
-          from_email: form.email,
-          phone: form.phone || "Not provided",
-          company: form.company,
-          website: form.website || "Not provided",
-          service_interest: form.interest,
-          monthly_budget: form.budget || "Not selected",
-          message: form.message,
-        },
-        { publicKey },
-      );
+      await submitContactLead(form);
+
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (serviceId && templateId && publicKey) {
+        emailjs
+          .send(
+            serviceId,
+            templateId,
+            {
+              from_name: form.name,
+              from_email: form.email,
+              phone: form.phone || "Not provided",
+              company: form.company,
+              website: form.website || "Not provided",
+              service_interest: form.interest,
+              monthly_budget: form.budget || "Not selected",
+              message: form.message,
+            },
+            { publicKey },
+          )
+          .catch((emailError) => {
+            console.error("EmailJS notification failed:", emailError);
+          });
+      }
+
       setSent(true);
       setStatus("success");
       setSubmitMessage(
-        "Thanks. Your brief has been sent to our inbox successfully.",
+        "Thanks. Your brief has been submitted successfully.",
       );
       setForm(initial);
     } catch (error) {
-      const emailError =
-        error?.text || error?.message || "Unknown EmailJS error";
+      const submitError =
+        error?.text || error?.message || "Unable to submit your brief.";
       setStatus("error");
-      setSubmitMessage(`EmailJS error: ${emailError}`);
-      console.error("EmailJS send failed:", error);
+      setSubmitMessage(`Submission error: ${submitError}`);
+      console.error("Contact form submission failed:", error);
     }
   }
 
@@ -132,8 +183,13 @@ export default function ContactForm({ className = "" }) {
               onChange={(e) => update(field, e.target.value)}
               placeholder=" "
               style={controlStyle}
+              disabled={status === "sending"}
             />
-            <span className="pointer-events-none absolute left-4 top-2 font-sans text-xs font-medium text-[#111827] transition peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#111827]">
+            <span
+              className={`pointer-events-none absolute left-4 font-sans font-medium text-[#111827] transition-all duration-200 peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#111827] ${
+                form[field] ? "top-2 text-xs opacity-0" : "top-2 text-xs opacity-100"
+              }`}
+            >
               {label}
             </span>
             <Error text={errors[field]} />
@@ -149,6 +205,7 @@ export default function ContactForm({ className = "" }) {
             value={form.interest}
             onChange={(e) => update("interest", e.target.value)}
             style={controlStyle}
+            disabled={status === "sending"}
           >
             <option value="">Select one</option>
             <option>Affiliate Branding</option>
@@ -167,6 +224,7 @@ export default function ContactForm({ className = "" }) {
             value={form.budget}
             onChange={(e) => update("budget", e.target.value)}
             style={controlStyle}
+            disabled={status === "sending"}
           >
             <option value="">Select range</option>
             <option>$3k-$7k</option>
@@ -186,6 +244,7 @@ export default function ContactForm({ className = "" }) {
           onChange={(e) => update("message", e.target.value)}
           placeholder="Type your message"
           style={controlStyle}
+          disabled={status === "sending"}
         />
         <Error text={errors.message} />
       </label>
@@ -200,7 +259,7 @@ export default function ContactForm({ className = "" }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className={`text-sm ${
-                status === "error" ? "text-coral" : "text-ink/65"
+                status === "error" ? "font-semibold text-red-600" : "text-ink/65"
               }`}
             >
               {submitMessage ||

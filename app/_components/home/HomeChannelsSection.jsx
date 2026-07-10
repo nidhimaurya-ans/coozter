@@ -1,13 +1,21 @@
+"use client";
+
 import AnimatedSection from "@/components/AnimatedSection";
 import {
   FiBarChart2,
   FiPieChart,
   FiSearch,
+  FiSend,
+  FiShare2,
   FiShield,
+  FiSliders,
+  FiStar,
   FiTarget,
   FiTrendingUp,
+  FiUsers,
   FiZap,
 } from "react-icons/fi";
+import useHomePageContent from "@/src/hooks/useHomePageContent";
 
 const benefits = [
   [FiTrendingUp, "Connected Strategy", "All channels aligned to one goal."],
@@ -23,7 +31,37 @@ const growthPoints = [
   [FiZap, "Scale", "Systemize what works and scale profitably."],
 ];
 
+const iconMap = {
+  "bar-chart-3": FiBarChart2,
+  network: FiShare2,
+  rocket: FiSend,
+  "sliders-horizontal": FiSliders,
+  sparkles: FiStar,
+  users: FiUsers,
+  zap: FiZap,
+};
+
 export default function HomeChannelsSection() {
+  const { channels } = useHomePageContent();
+  const channelBenefits =
+    channels?.benefits?.length > 0
+      ? channels.benefits.map(({ title, text, iconKey }, index) => [
+          iconMap[iconKey] || benefits[index]?.[0] || FiTrendingUp,
+          title,
+          text,
+        ])
+      : benefits;
+  const channelGrowthPoints =
+    channels?.growthPoints?.length > 0
+      ? channels.growthPoints.map(({ title, text, iconKey }, index) => [
+          iconMap[iconKey] || growthPoints[index]?.[0] || FiZap,
+          title,
+          text,
+        ])
+      : growthPoints;
+  const centerLabel = (channels?.centerLabel || "Growth\nEngine").split("\n");
+  const CenterIcon = iconMap[channels?.centerIconKey] || FiZap;
+
   return (
     <AnimatedSection className="overflow-hidden bg-[linear-gradient(135deg,#061a2f_0%,#071b33_46%,#0d55b0_100%)] py-5 text-white ">
       <div className="container-pad relative">
@@ -31,19 +69,19 @@ export default function HomeChannelsSection() {
           <div className="relative">
             <h2 className="mt-5 font-serif text-[2.35rem] font-medium leading-[1.08] sm:text-[3.2rem] sm:leading-[1.18]">
               <span className="block text-white anim-left-to-right">
-                Every Marketing Channel
+                {channels?.title || "Every Marketing Channel"}
               </span>
               <span className="block mt-2 text-blue-400 anim-left-to-right [animation-delay:1s]">
-                Works Together.
+                {channels?.highlight || "Works Together."}
               </span>
             </h2>
             <p className="mt-5 max-w-md text-base leading-7 text-white/72 sm:mt-8 sm:text-xl sm:leading-9">
-              We build a connected growth system where every channel supports
-              the next, driving consistent pipeline and revenue.
+              {channels?.description ||
+                "We build a connected growth system where every channel supports the next, driving consistent pipeline and revenue."}
             </p>
 
             <div className="mb-4 mt-7 grid gap-5 sm:mb-8 sm:mt-12 sm:gap-7">
-              {benefits.map(([Icon, title, text], index) => (
+              {channelBenefits.map(([Icon, title, text], index) => (
                 <div
                   key={title}
                   className={`flex items-center gap-5 anim-fade-up anim-delay-${index + 1}`}
@@ -116,17 +154,19 @@ export default function HomeChannelsSection() {
 
             <div className="absolute left-1/2 top-[8.7rem] z-20 grid h-28 w-28 -translate-x-1/2 place-items-center rounded-full bg-[#061b3d] text-center sm:top-[11.05rem] sm:h-36 sm:w-36 md:top-1/2 md:h-28 md:w-28 md:-translate-y-1/2 lg:h-36 lg:w-36">
               <span className="grid gap-3">
-                <FiZap className="mx-auto text-4xl text-white drop-shadow-[0_0_18px_rgba(43,188,255,0.75)] sm:text-5xl" />
+                <CenterIcon className="mx-auto text-4xl text-white drop-shadow-[0_0_18px_rgba(43,188,255,0.75)] sm:text-5xl" />
                 <span className="text-sm font-black uppercase leading-tight tracking-[0.05em] text-white sm:text-lg">
-                  Growth
-                  <br />
-                  Engine
+                  {centerLabel.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
                 </span>
               </span>
             </div>
 
             <div className="relative z-30 mx-auto grid max-w-[22rem] grid-cols-2 gap-3 pt-[23rem] sm:max-w-2xl sm:gap-4 sm:pt-[30rem] md:absolute md:inset-0 md:max-w-none md:grid-cols-none md:pt-0">
-              {growthPoints.map(([Icon, title, text], index) => {
+              {channelGrowthPoints.map(([Icon, title, text], index) => {
                 const positions = [
                   "md:left-1/2 md:top-[5%] md:w-40 md:-translate-x-1/2 lg:top-[3%] lg:w-48",
                   "md:left-0 md:top-[31%] md:w-40 lg:left-[2%] lg:top-[30%] lg:w-56",

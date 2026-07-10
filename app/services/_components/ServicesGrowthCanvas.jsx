@@ -1,31 +1,46 @@
-import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
+"use client";
+
+import {
+  FiArrowRight,
+  FiCheckCircle,
+  FiGlobe,
+  FiRefreshCcw,
+  FiShield,
+  FiTarget,
+  FiTrendingUp,
+} from "react-icons/fi";
 import AnimatedSection from "@/components/AnimatedSection";
 import MagneticButton from "@/components/MagneticButton";
-import {
-  achievementBlocks,
-  caseStudies,
-  comparisonRows,
-  detailedServices,
-  industries,
-  metrics,
-  platforms,
-  plans,
-  sectionSpace,
-  trackedMetrics,
-  whyChooseBlocks,
-  workflow,
-} from "../_data/servicesContent";
+import { sectionSpace } from "../_data/servicesContent";
 import MotionItem from "./MotionItem";
 import SectionHeader from "./SectionHeader";
+import useServicesPageContent from "@/src/hooks/useServicesPageContent";
+
+const outcomeIconMap = {
+  globe: FiGlobe,
+  refresh: FiRefreshCcw,
+  shield: FiShield,
+  target: FiTarget,
+  "trending-up": FiTrendingUp,
+};
+
+const growthCardClasses = [
+  "growth-canvas-card-one",
+  "growth-canvas-card-two",
+  "growth-canvas-card-three",
+  "growth-canvas-card-four",
+];
 
 export default function ServicesGrowthCanvas() {
+  const { growthEngine, outcomes, process } = useServicesPageContent();
+
   return (
     <>
       <AnimatedSection className={`${sectionSpace} overflow-hidden mt-8`}>
         <div className="grid gap-12 xl:grid-cols-[0.82fr_1.18fr] xl:items-center">
           <SectionHeader
-            title="Marketing systems that move like one connected engine."
-            text="Every channel has a role: attract demand, shape trust, capture intent, and report what should happen next."
+            title={growthEngine.title}
+            text={growthEngine.text}
           />
 
           <MotionItem
@@ -34,31 +49,24 @@ export default function ServicesGrowthCanvas() {
           >
             <div
               className="absolute inset-0"
-              aria-label="Connected marketing growth system visual"
+              aria-label={growthEngine.visualAlt}
               role="img"
             >
               <span className="growth-canvas-ring growth-canvas-ring-one" />
               <span className="growth-canvas-ring growth-canvas-ring-two" />
               <div className="growth-canvas-core">
-                <span>Growth</span>
-                <strong>Engine</strong>
+                <span>{growthEngine.centerLabelLineOne}</span>
+                <strong>{growthEngine.centerLabelLineTwo}</strong>
               </div>
-              <div className="growth-canvas-card growth-canvas-card-one">
-                <strong>SEO</strong>
-                <span>Intent captured</span>
-              </div>
-              <div className="growth-canvas-card growth-canvas-card-two">
-                <strong>Paid</strong>
-                <span>Demand tested</span>
-              </div>
-              <div className="growth-canvas-card growth-canvas-card-three">
-                <strong>Content</strong>
-                <span>Trust built</span>
-              </div>
-              <div className="growth-canvas-card growth-canvas-card-four">
-                <strong>Analytics</strong>
-                <span>Decisions clear</span>
-              </div>
+              {growthEngine.cards.slice(0, 4).map(({ title, text }, index) => (
+                <div
+                  key={title}
+                  className={`growth-canvas-card ${growthCardClasses[index]}`}
+                >
+                  <strong>{title}</strong>
+                  <span>{text}</span>
+                </div>
+              ))}
               <span className="growth-canvas-scan growth-canvas-scan-one" />
               <span className="growth-canvas-scan growth-canvas-scan-two" />
             </div>
@@ -70,36 +78,40 @@ export default function ServicesGrowthCanvas() {
         <SectionHeader
           align="center"
           // eyebrow="Outcomes"
-          title="Marketing That Moves Real Business Metrics"
-          text="We focus on outcomes that matter, not vanity metrics."
+          title={outcomes.title}
+          text={outcomes.text}
         />
 
         <div className="mt-14 grid gap-8 xl:grid-cols-[1fr_0.72fr] xl:items-start">
           <div className="space-y-7">
-            {achievementBlocks.map(([Icon, title, text], index) => (
-              <MotionItem
-                key={title}
-                direction={index % 2 ? "left" : "right"}
-                delay={index * 0.06}
-                className="group flex gap-5"
-              >
-                <span className="mt-1 grid h-12 w-12 shrink-0 place-items-center rounded-full bg-blue-600 text-white transition duration-300 group-hover:scale-110">
-                  <Icon size={18} />
-                </span>
-                <span>
-                  <span className="block font-serif text-3xl font-medium text-ink">
-                    {title}
+            {outcomes.achievementBlocks.map(({ iconKey, title, text }, index) => {
+              const Icon = outcomeIconMap[iconKey] || FiTarget;
+
+              return (
+                <MotionItem
+                  key={title}
+                  direction={index % 2 ? "left" : "right"}
+                  delay={index * 0.06}
+                  className="group flex gap-5"
+                >
+                  <span className="mt-1 grid h-12 w-12 shrink-0 place-items-center rounded-full bg-blue-600 text-white transition duration-300 group-hover:scale-110">
+                    <Icon size={18} />
                   </span>
-                  <span className="mt-2 block max-w-2xl text-sm leading-7 text-ink/64">
-                    {text}
+                  <span>
+                    <span className="block font-serif text-3xl font-medium text-ink">
+                      {title}
+                    </span>
+                    <span className="mt-2 block max-w-2xl text-sm leading-7 text-ink/64">
+                      {text}
+                    </span>
                   </span>
-                </span>
-              </MotionItem>
-            ))}
+                </MotionItem>
+              );
+            })}
           </div>
 
           <MotionItem direction="left" className="metric-sculpture">
-            {metrics.map(([value, label], index) => (
+            {outcomes.metrics.map(({ value, label }, index) => (
               <span
                 key={label}
                 className={`metric-bubble metric-bubble-pos-${index + 1}`}
@@ -137,12 +149,12 @@ export default function ServicesGrowthCanvas() {
         <div className="grid gap-12 xl:grid-cols-[0.82fr_1.18fr]">
           <SectionHeader
             // eyebrow="How we work"
-            title="Our Simple Growth Process"
-            text="A clear process keeps strategy, execution, and reporting moving in the same direction."
+            title={process.title}
+            text={process.text}
           />
 
           <div className="process-orbit">
-            {workflow.map(([title, text], index) => (
+            {process.steps.map(({ title, text }, index) => (
               <MotionItem
                 key={title}
                 direction="up"

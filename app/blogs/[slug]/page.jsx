@@ -1,223 +1,251 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  FiArrowLeft,
-  FiArrowRight,
+  FiCalendar,
   FiClock,
-  FiEdit3,
-  FiLayers,
-  FiTrendingUp,
+  FiShare2,
+  FiUser,
 } from "react-icons/fi";
-import AnimatedSection from "@/components/AnimatedSection";
-import NewsletterForm from "@/components/NewsletterForm";
-import MagneticButton from "@/components/MagneticButton";
 import { blogs } from "@/data/blogs";
-import BlogPreview from "../_components/BlogPreview";
+import { getBlogBySlug, getPublishedBlogs } from "@/src/services/blogService";
+import { getBlogPageContent } from "@/src/services/blogPageService";
+import CopyLinkButton from "../_components/CopyLinkButton";
 import { getBlogImage } from "../_data/blogImages";
 
-export async function generateStaticParams() {
-  return blogs.map((post) => ({ slug: post.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const post = blogs.find((item) => item.slug === slug);
+  const post = await loadBlog(slug);
   return { title: post ? `${post.title} | Coozter` : "Blog | Coozter" };
 }
 
 export default async function BlogDetailPage({ params }) {
   const { slug } = await params;
-  const post = blogs.find((item) => item.slug === slug);
+  const post = await loadBlog(slug);
   if (!post) notFound();
-  const related = blogs.filter((item) => item.slug !== post.slug).slice(0, 2);
-  const image = getBlogImage(post.slug);
-  const contents = [
-    ["Opening", "opening"],
-    ["What changes", "what-changes"],
-    ["Practical read", "practical-read"],
-    ["Related", "related"],
-  ];
+  const blogPageContent = await loadBlogPageContent();
+  const allPosts = await loadBlogs();
+  const related = allPosts.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const recent = allPosts.filter((item) => item.slug !== post.slug).slice(0, 4);
+  const image = getBlogImage(post);
+  const heroImage = post.imageUrl || image;
+  const bodyImage = post.secondaryImageUrl || post.contentImageUrl || image;
+  const bodyImageAlt =
+    post.secondaryImageAlt || post.contentImageAlt || post.image || post.title;
+  const tags =
+    Array.isArray(post.tags) && post.tags.length > 0
+      ? post.tags
+      : [post.category, post.readTime].filter(Boolean);
 
   return (
-    <div className="flex flex-col gap-5">
-      <article className="overflow-hidden bg-[linear-gradient(135deg,#ffffff_0%,#f3fbff_46%,#dcefff_100%)] pt-32 sm:pt-36 lg:pt-40">
-        <div className="container-pad relative pb-5">
+    <main className="bg-[linear-gradient(135deg,#ffffff_0%,#f3fbff_46%,#dcefff_100%)] px-4 py-28 text-[#171717] sm:px-6 lg:px-8">
+      <article className="mx-auto max-w-6xl">
+        <div className="px-0 py-6">
           <Link
             href="/blogs"
-            className="relative inline-flex items-center gap-2 rounded-full border border-slate-300/80 bg-white/76 px-4 py-2 text-sm font-semibold text-ink/70 shadow-[0_14px_38px_rgba(14,62,128,0.08)] transition hover:-translate-y-0.5 hover:border-coral/50 hover:text-moss anim-fade-up"
+            className="mb-10 inline-flex rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-ink/70 transition hover:border-[#0d5ee8] hover:text-[#0d5ee8]"
           >
-            <FiArrowLeft size={15} />
-            Back to articles
+            {blogPageContent.buttons.backButtonLabel}
           </Link>
 
-          <div className="relative mt-9 grid gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(440px,0.92fr)] lg:items-end xl:gap-16">
-            <div className="anim-fade-up anim-delay-1">
-              <p className="mb-6 inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-moss">
-                <span className="h-px w-10 bg-coral anim-reveal-line" />
-                {post.category}
-              </p>
-              <h1
-                id="opening"
-                className="display-title max-w-5xl font-serif text-ink"
-              >
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
+            <header className="max-w-3xl">
+              <h1 className="max-w-3xl font-serif text-4xl font-bold leading-[1.12] tracking-[-0.01em] text-ink sm:text-5xl lg:text-[4.2rem]">
                 {post.title}
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/64">
+              <p className="mt-6 max-w-2xl text-base font-medium leading-8 text-ink/68">
                 {post.excerpt}
               </p>
-
-              <div className="mt-8 flex flex-wrap gap-3 text-sm text-ink/62">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/76 px-4 py-2 shadow-[0_12px_34px_rgba(14,62,128,0.07)]">
-                  <FiEdit3 size={15} className="text-moss" />
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs font-semibold text-ink/72">
+                <span className="inline-flex items-center gap-2">
+                  <FiUser className="text-moss" size={16} />
                   {post.author}
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/76 px-4 py-2 shadow-[0_12px_34px_rgba(14,62,128,0.07)]">
-                  <FiClock size={15} className="text-moss" />
-                  {post.readTime}
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/76 px-4 py-2 shadow-[0_12px_34px_rgba(14,62,128,0.07)]">
+                <span className="h-5 w-px bg-slate-300" />
+                <span>{post.category}</span>
+                <span className="h-5 w-px bg-slate-300" />
+                <span className="inline-flex items-center gap-2">
+                  <FiCalendar className="text-moss" size={15} />
                   {post.date}
                 </span>
+                <span className="inline-flex items-center gap-2">
+                  <FiClock className="text-moss" size={15} />
+                  {post.readTime}
+                </span>
+              </div>
+            </header>
+
+            <div className="relative min-h-[260px] overflow-hidden bg-slate-100 shadow-[0_18px_46px_rgba(15,23,42,0.12)] sm:min-h-[330px] lg:mt-6">
+              <img
+                src={heroImage}
+                alt={post.image || post.title}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
+            <div className="min-w-0">
+              <section className="max-w-3xl">
+                <h2 className="font-serif text-3xl font-bold leading-tight text-ink sm:text-4xl">
+                  {post.title}
+                </h2>
+                <div className="mt-6 space-y-5 text-[0.98rem] font-medium leading-8 text-ink/78">
+                  {post.body.slice(0, 2).map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </section>
+
+              <figure className="my-11 max-w-4xl">
+                <div className="relative min-h-[260px] overflow-hidden bg-slate-100 sm:min-h-[420px]">
+                  <img
+                    src={bodyImage}
+                    alt={bodyImageAlt}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+                <figcaption className="mt-3 text-xs font-semibold text-ink/70">
+                  {bodyImageAlt}
+                </figcaption>
+              </figure>
+
+              <section className="max-w-3xl space-y-10">
+                {post.body.slice(2).map((paragraph, index) => (
+                  <div key={paragraph}>
+                    {index === 0 && (
+                      <h2 className="mb-6 font-serif text-3xl font-bold leading-tight text-ink sm:text-4xl">
+                        {post.pullQuote || blogPageContent.detail.fieldNoteBadge}
+                      </h2>
+                    )}
+                    <p className="text-[0.98rem] font-medium leading-8 text-ink/78">
+                      {paragraph}
+                    </p>
+                  </div>
+                ))}
+                {post.pullQuote && (
+                  <blockquote className="border-l-4 border-[#0d5ee8] pl-5 font-serif text-2xl font-bold leading-snug text-ink">
+                    {post.pullQuote}
+                  </blockquote>
+                )}
+                <p className="text-[0.98rem] font-medium leading-8 text-ink/78">
+                  {blogPageContent.detail.defaultExtraParagraph}
+                </p>
+              </section>
+
+              <div className="mt-12 flex flex-col gap-5 border-y border-slate-200 py-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-wrap gap-2">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-[#f7f0f2] px-4 py-2 text-xs font-semibold text-ink/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex items-center gap-3">
+                  <Link
+                    href={`/blogs/${post.slug}`}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-ink/70 transition hover:border-[#0d5ee8] hover:text-[#0d5ee8]"
+                    aria-label={blogPageContent.detail.related.allArticlesLabel}
+                  >
+                    <FiShare2 size={16} />
+                  </Link>
+                  <CopyLinkButton label={blogPageContent.detail.copyLinkLabel} />
+                </div>
               </div>
             </div>
 
-            <div className="relative min-h-[390px] overflow-hidden rounded-[2rem] border border-white/85 bg-white shadow-[0_30px_90px_rgba(14,62,128,0.14)] anim-blur-in anim-delay-2 sm:min-h-[460px]">
-              <div
-                className="absolute inset-0 bg-cover bg-center anim-image-zoom"
-                style={{ backgroundImage: `url(${image})` }}
-                aria-label={post.image}
-                role="img"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,51,0.02)_0%,rgba(7,27,51,0.18)_45%,rgba(7,27,51,0.82)_100%)]" />
-              <div className="absolute left-6 top-6 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-moss shadow-[0_14px_38px_rgba(14,62,128,0.12)]">
-                Field note
+            <aside className="lg:sticky lg:top-28">
+              <h2 className="font-serif text-2xl font-bold text-ink">
+                {blogPageContent.detail.recentTitle}
+              </h2>
+              <div className="mt-4 divide-y divide-slate-200">
+                {recent.map((item) => (
+                  <Link
+                    href={`/blogs/${item.slug}`}
+                    key={item.slug}
+                    className="block py-5 text-sm font-bold leading-6 text-ink transition hover:text-[#0d5ee8]"
+                  >
+                    {item.title}
+                  </Link>
+                ))}
               </div>
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="max-w-md text-sm leading-6 text-white/78">
-                  {post.image}
-                </p>
-              </div>
-            </div>
+            </aside>
           </div>
+
+          <section className="mt-14">
+            <h2 className="font-serif text-4xl font-bold text-ink">
+              {blogPageContent.detail.related.title}
+            </h2>
+            <div className="mt-8 grid gap-8 md:grid-cols-3">
+              {related.map((item) => (
+                <RelatedArticle key={item.slug} post={item} />
+              ))}
+            </div>
+          </section>
         </div>
       </article>
-
-      <section className="container-pad py-5">
-        <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,760px)_minmax(230px,1fr)] xl:gap-14">
-          <aside className="hidden lg:block">
-            <div className="sticky top-28 rounded-[1.35rem] border border-slate-300/80 bg-white/82 p-5 shadow-[0_18px_56px_rgba(14,62,128,0.08)] backdrop-blur">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-ink/45">
-                Contents
-              </p>
-              {contents.map(([label, target]) => (
-                <a
-                  key={target}
-                  href={`#${target}`}
-                  className="block border-l border-slate-300/80 px-4 py-2 text-sm text-ink/58 transition hover:border-coral hover:text-moss"
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-          </aside>
-
-          <div>
-            <div className="prose-growth anim-fade-up">
-              {post.body.map((paragraph, index) => (
-                <p
-                  key={paragraph}
-                  id={index === 1 ? "what-changes" : undefined}
-                >
-                  {paragraph}
-                </p>
-              ))}
-              <blockquote id="practical-read">{post.pullQuote}</blockquote>
-              <p>
-                In practice, this means naming the decision you want the asset
-                or campaign to support. If the answer is vague, the work will
-                drift. If the answer is clear, the channel has something useful
-                to do.
-              </p>
-            </div>
-          </div>
-
-          <aside className="lg:pt-12">
-            <div className="rounded-[1.5rem] bg-[linear-gradient(135deg,#071b33,#0d55b0)] p-6 text-white shadow-[0_24px_70px_rgba(14,62,128,0.16)] anim-fade-up anim-delay-2">
-              <FiTrendingUp size={22} className="text-sky-200" />
-              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-sky-100">
-                Useful when
-              </p>
-              <p className="mt-3 text-lg font-semibold leading-7">
-                Your team needs clearer decisions from content, partners, or
-                performance channels.
-              </p>
-            </div>
-
-            <div className="mt-5 rounded-[1.5rem] border border-slate-300/80 bg-white p-6 shadow-[0_18px_56px_rgba(14,62,128,0.08)] anim-fade-up anim-delay-3">
-              <FiLayers size={21} className="text-moss" />
-              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-ink/45">
-                Article type
-              </p>
-              <p className="mt-3 text-sm leading-7 text-ink/64">
-                Strategy note for teams building visibility, partner trust, and
-                measurable demand.
-              </p>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <AnimatedSection className="container-pad py-5" id="related">
-        <div className="grid gap-8 rounded-[2rem] bg-[linear-gradient(135deg,#071b33,#0a3b7a_58%,#0f6fb8)] p-8 text-warm shadow-[0_28px_90px_rgba(7,27,51,0.18)] md:grid-cols-[1fr_0.8fr] md:p-10">
-          <div>
-            <h2 className="font-serif text-4xl leading-tight md:text-5xl">
-              Bring this thinking into your growth plan.
-            </h2>
-            <p className="mt-4 max-w-xl text-warm/70">
-              We can help translate the ideas into search pages, partner
-              assets, campaigns, and reporting.
-            </p>
-          </div>
-          <div className="self-end">
-            <MagneticButton href="/contact" variant="light">
-              Plan My Growth
-            </MagneticButton>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      <AnimatedSection className="container-pad py-5">
-        <div className="mb-8 flex flex-col gap-4 border-b border-slate-300/80 pb-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="eyebrow">Continue reading</p>
-            <h2 className="mt-3 font-serif text-4xl leading-tight text-ink md:text-5xl">
-              Related articles
-            </h2>
-          </div>
-          <Link
-            href="/blogs"
-            className="inline-flex items-center gap-2 font-semibold text-moss transition hover:text-coral"
-          >
-            All articles <FiArrowRight size={16} />
-          </Link>
-        </div>
-        <div className="grid gap-8 md:grid-cols-2">
-          {related.map((item) => (
-            <BlogPreview key={item.slug} post={item} />
-          ))}
-        </div>
-      </AnimatedSection>
-
-      <section className="container-pad py-5">
-        <div className="rounded-[2rem] border border-slate-300/80 bg-white p-7 shadow-[0_22px_70px_rgba(14,62,128,0.08)] md:p-9">
-          <h2 className="font-serif text-4xl text-ink">Newsletter</h2>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-ink/60">
-            Get one practical note each month on affiliate branding, search,
-            performance, and reporting.
-          </p>
-          <NewsletterForm />
-        </div>
-      </section>
-    </div>
+    </main>
   );
+}
+
+function RelatedArticle({ post }) {
+  const image = post.imageUrl || getBlogImage(post);
+
+  return (
+    <article>
+      <Link href={`/blogs/${post.slug}`} className="group block">
+        <div className="relative min-h-[180px] overflow-hidden bg-slate-100">
+          <img
+            src={image}
+            alt={post.image || post.title}
+            className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+          />
+        </div>
+        <p className="mt-5 text-xs font-semibold text-ink/45">{post.category}</p>
+        <h3 className="mt-3 font-serif text-xl font-bold leading-tight text-ink transition group-hover:text-[#0d5ee8]">
+          {post.title}
+        </h3>
+        <p className="mt-3 text-sm font-medium leading-6 text-ink/68">
+          {post.excerpt}
+        </p>
+      </Link>
+    </article>
+  );
+}
+
+async function loadBlog(slug) {
+  try {
+    return (
+      (await getBlogBySlug(slug)) ||
+      blogs.find((item) => item.slug === slug) ||
+      null
+    );
+  } catch (error) {
+    console.error("Unable to load Firebase blog", error);
+    return blogs.find((item) => item.slug === slug) || null;
+  }
+}
+
+async function loadBlogs() {
+  try {
+    const firebaseBlogs = await getPublishedBlogs();
+    return firebaseBlogs.length > 0 ? firebaseBlogs : blogs;
+  } catch (error) {
+    console.error("Unable to load Firebase blogs", error);
+    return blogs;
+  }
+}
+
+async function loadBlogPageContent() {
+  try {
+    return await getBlogPageContent();
+  } catch (error) {
+    console.error("Unable to load Firebase blog page content", error);
+    const { defaultBlogPageContent } = await import("@/src/services/blogPageService");
+    return defaultBlogPageContent;
+  }
 }

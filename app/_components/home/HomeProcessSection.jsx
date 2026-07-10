@@ -1,28 +1,19 @@
+"use client";
+
 import AnimatedSection from "@/components/AnimatedSection";
-
-const process = [
-  ["Diagnose", "Demand, offer clarity, channel data, and trust signals are mapped before any campaign work starts."],
-  ["Position", "Audience, proof, message, and conversion paths are sharpened so every channel knows what to say."],
-  ["Build", "Landing pages, partner kits, content briefs, ad tests, and tracking are created around one growth logic."],
-  ["Launch", "Focused tests go live with enough structure to learn from traffic, leads, and sales conversations."],
-  ["Optimize", "Channel mix, creative, pages, and reporting improve from quality signals instead of guesswork."],
-  ["Report", "You get a clear read on what changed, why it matters, and what should happen next."],
-];
-
-const planningImages = [
-  "url('https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=82')",
-  "url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=82')",
-  "url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1100&q=82')",
-];
+import useHomePageContent from "@/src/hooks/useHomePageContent";
 
 export default function HomeProcessSection() {
+  const { process } = useHomePageContent();
+  const planningImages = process.images;
+
   return (
     <AnimatedSection className="container-pad py-5">
       <div className="grid gap-8 sm:gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1fr)] lg:items-center lg:gap-12 xl:gap-48">
         <div
           className="relative min-h-[320px] sm:min-h-[420px] lg:min-h-[640px]"
           role="img"
-          aria-label="Team planning marketing campaigns in a workspace"
+          aria-label={process.imageAlt}
         >
           {/* Layered glass version:
           <div
@@ -74,11 +65,11 @@ export default function HomeProcessSection() {
         </div>
 
         <div className="anim-slide-left">
-          <h2 className=" font-serif text-[2.18rem] font-medium leading-[0.98] text-ink sm:text-5xl">
-            From scattered activity to clear momentum.
+            <h2 className=" font-serif text-[2.18rem] font-medium leading-[0.98] text-ink sm:text-5xl">
+            {process.headline}
           </h2>
           <div className="mt-9  ">
-            {process.map(([title, text], index) => (
+            {process.steps.map(({ title, text }, index) => (
               <div
                 key={title}
                 className={`grid gap-4 py-3  sm:grid-cols-[1.5rem_0.45fr_1fr] anim-fade-down anim-delay-${Math.min(index + 1, 5)}`}

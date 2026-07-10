@@ -1,12 +1,8 @@
 "use client";
 
 import AnimatedSection from "@/components/AnimatedSection";
-import {
-  divider,
-  proofMetrics,
-  sectionSpace,
-  teamMembers,
-} from "../_data/aboutContent";
+import { divider, sectionSpace } from "../_data/aboutContent";
+import useAboutPageContent from "@/src/hooks/useAboutPageContent";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -20,6 +16,7 @@ const imageAnimations = [
 ];
 
 export default function TeamShowcaseSection() {
+  const { team } = useAboutPageContent();
   const [activeMember, setActiveMember] = useState(null);
   const [mounted, setMounted] = useState(false);
   const closeTimer = useRef(null);
@@ -56,12 +53,10 @@ export default function TeamShowcaseSection() {
           <div className="anim-slide-left lg:max-w-4xl">
             <p className="eyebrow inline-flex items-center gap-3 text-moss">
               <span className="h-px w-9 bg-coral anim-reveal-line" />
-              Meet our team
+              {team.eyebrow}
             </p>
 
-            {/* <h2 className="mt-5 font-serif text-[2.4rem] leading-[1.3] text-ink sm:text-5xl md:text-6xl">
-              The people shaping partner-led growth.
-            </h2> */}
+            <h2 className="sr-only">{team.headline}</h2>
           </div>
           {/* 
           <p className="max-w-md text-base leading-7 text-ink/62 anim-fade-up anim-delay-1 lg:justify-self-end">
@@ -78,11 +73,10 @@ export default function TeamShowcaseSection() {
             <div className="team-3d-path team-3d-path-one" />
             <div className="team-3d-path team-3d-path-two" />
 
-            {teamMembers.map((member, index) => {
-              const [name, role, focus, image] = member;
+            {team.members.map((member, index) => {
               return (
                 <article
-                  key={name}
+                  key={member.name}
                   className={`team-3d-person team-3d-person-${index + 1} cursor-pointer focus:z-[60] hover:z-[60]`}
                   tabIndex={0}
                   onMouseEnter={() => openMember(member)}
@@ -97,15 +91,18 @@ export default function TeamShowcaseSection() {
                     )}`}
                   >
                     <div
-                      aria-label={`${name}, ${role} at Coozter`}
+                      aria-label={
+                        member.imageAlt ||
+                        `${member.name}, ${member.role} at ${member.company}`
+                      }
                       role="img"
                       className="team-3d-photo"
-                      style={{ backgroundImage: `url(${image})` }}
+                      style={{ backgroundImage: `url(${member.imageUrl})` }}
                     />
                     <div className="team-3d-shine" />
                     <div className="team-3d-caption">
-                      <p>{role}</p>
-                      <h3>{name}</h3>
+                      <p>{member.role}</p>
+                      <h3>{member.name}</h3>
                     </div>
                   </div>
                 </article>
@@ -114,9 +111,9 @@ export default function TeamShowcaseSection() {
           </div>
 
           <div className="grid gap-3">
-            {teamMembers.map(([name, role, focus], index) => (
+            {team.members.map((member, index) => (
               <div
-                key={name}
+                key={member.name}
                 className={`border-b ${divider} py-4 anim-fade-up last:border-b-0 anim-delay-${Math.min(
                   index + 1,
                   5,
@@ -125,10 +122,10 @@ export default function TeamShowcaseSection() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-moss">
-                      {role}
+                      {member.role}
                     </p>
                     <h3 className="mt-2 font-serif text-3xl leading-tight text-ink">
-                      {name}
+                      {member.name}
                     </h3>
                   </div>
                   {/* <span className="font-serif text-4xl leading-none text-moss/24 transition duration-300 group-hover:text-moss/45">
@@ -137,7 +134,7 @@ export default function TeamShowcaseSection() {
                 </div>
 
                 <p className="mt-3 max-w-md text-sm leading-7 text-ink/62">
-                  {focus}
+                  {member.focus}
                 </p>
               </div>
             ))}
@@ -152,7 +149,7 @@ export default function TeamShowcaseSection() {
                 className="pointer-events-none fixed inset-0 z-[999] grid place-items-center overflow-y-auto bg-[#020b18]/76 px-4 py-6 backdrop-blur-md"
                 role="dialog"
                 aria-modal="true"
-                aria-label={`${activeMember[0]} profile`}
+                aria-label={`${activeMember.name} profile`}
                 onClick={() => setActiveMember(null)}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -183,17 +180,20 @@ export default function TeamShowcaseSection() {
                   >
                     <div
                       className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url(${activeMember[3]})` }}
+                      style={{ backgroundImage: `url(${activeMember.imageUrl})` }}
                       role="img"
-                      aria-label={`${activeMember[0]}, ${activeMember[1]}`}
+                      aria-label={
+                        activeMember.imageAlt ||
+                        `${activeMember.name}, ${activeMember.role}`
+                      }
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,26,47,0.02)_0%,rgba(6,26,47,0.34)_58%,rgba(6,26,47,0.78)_100%)]" />
                     <div className="absolute bottom-5 left-5 right-5 rounded-[1rem] border border-white/18 p-4 backdrop-blur-md">
                       <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-sky-100">
-                        {activeMember[4]} Leadership
+                        {activeMember.company} {team.modalCompanyLabelSuffix}
                       </p>
                       <h3 className="mt-2 text-2xl font-extrabold leading-tight text-white">
-                        {activeMember[0]}
+                        {activeMember.name}
                       </h3>
                     </div>
                   </motion.div>
@@ -205,7 +205,7 @@ export default function TeamShowcaseSection() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.12, duration: 0.38 }}
                     >
-                      {activeMember[1]}
+                      {activeMember.role}
                     </motion.p>
                     <motion.h3
                       className="mt-5 font-serif text-4xl font-extrabold leading-none text-white sm:text-5xl"
@@ -213,7 +213,7 @@ export default function TeamShowcaseSection() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.18, duration: 0.4 }}
                     >
-                      {activeMember[0]}
+                      {activeMember.name}
                     </motion.h3>
                     <motion.p
                       className="mt-5 max-w-xl text-base leading-8 text-white/78"
@@ -221,7 +221,7 @@ export default function TeamShowcaseSection() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.24, duration: 0.4 }}
                     >
-                      {activeMember[6]}
+                      {activeMember.bio}
                     </motion.p>
 
                     <motion.div
@@ -232,24 +232,28 @@ export default function TeamShowcaseSection() {
                     >
                       <div className=" p-5 backdrop-blur">
                         <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-sky-100/80">
-                          Focus
+                          {team.focusLabel}
                         </p>
                         <p className="mt-3 text-sm leading-7 text-white/76">
-                          {activeMember[2]}
+                          {activeMember.focus}
                         </p>
                       </div>
                       <div className=" p-5 backdrop-blur">
                         <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-sky-100/80">
-                          Company
+                          {team.companyLabel}
                         </p>
                         <p className="mt-3 text-sm font-extrabold text-white">
-                          {activeMember[4]}
+                          {activeMember.company}
                         </p>
                       </div>
                     </motion.div>
 
                     <motion.a
-                      href={`https://${activeMember[5]}`}
+                      href={
+                        activeMember.linkedinUrl?.startsWith("http")
+                          ? activeMember.linkedinUrl
+                          : `https://${activeMember.linkedinUrl}`
+                      }
                       target="_blank"
                       rel="noreferrer"
                       className="mt-7 inline-flex max-w-full items-center gap-2 break-all rounded-full border border-sky-200/24 bg-[#0d5ee8] px-5 py-3 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[#176fff]"
@@ -258,7 +262,7 @@ export default function TeamShowcaseSection() {
                       transition={{ delay: 0.36, duration: 0.42 }}
                     >
                       <FiLinkedin className="shrink-0" />
-                      {activeMember[5]}
+                      {activeMember.linkedinUrl}
                     </motion.a>
                   </div>
                 </motion.div>

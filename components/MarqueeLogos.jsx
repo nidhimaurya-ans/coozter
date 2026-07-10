@@ -10,27 +10,55 @@ const partners = [
   [NikeLogo, "Nike"],
 ];
 
-export default function MarqueeLogos() {
+export default function MarqueeLogos({ logos = [] }) {
+  const activeLogos = logos.filter((logo) => logo?.logoUrl);
+  const marqueeItems =
+    activeLogos.length > 0
+      ? activeLogos.map((logo) => [null, logo.name, logo])
+      : partners.map(([Logo, name]) => [Logo, name, null]);
+  const filledItems = Array.from(
+    { length: Math.max(4, Math.ceil(12 / marqueeItems.length)) },
+    () => marqueeItems,
+  ).flat();
+
   return (
-    <div className="mt-8 overflow-hidden bg-transparent py-7">
+    <div className="mt-8 w-full overflow-hidden bg-transparent py-7">
       <motion.div
-        className="flex min-w-max items-center gap-20"
+        className="flex w-max items-center"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
       >
-        {[...partners, ...partners, ...partners, ...partners].map(
-          ([Logo, name], index) => (
-            <span
-              key={`${name}-${index}`}
-              className="inline-flex min-w-max items-center opacity-85 transition hover:-translate-y-0.5 hover:opacity-100"
-              aria-label={name}
-              role="img"
-            >
-              <Logo />
-            </span>
-          ),
-        )}
+        <LogoTrack items={filledItems} trackKey="primary" />
+        <LogoTrack items={filledItems} trackKey="duplicate" ariaHidden />
       </motion.div>
+    </div>
+  );
+}
+
+function LogoTrack({ items, trackKey, ariaHidden = false }) {
+  return (
+    <div
+      className="flex shrink-0 items-center gap-14 pr-14 sm:gap-20 sm:pr-20"
+      aria-hidden={ariaHidden}
+    >
+      {items.map(([Logo, name, logo], index) => (
+        <span
+          key={`${trackKey}-${name}-${index}`}
+          className="inline-flex min-w-max shrink-0 items-center opacity-85 transition hover:-translate-y-0.5 hover:opacity-100"
+          aria-label={ariaHidden ? undefined : name}
+          role={ariaHidden ? undefined : "img"}
+        >
+          {logo ? (
+            <img
+              src={logo.logoUrl}
+              alt={ariaHidden ? "" : logo.altText || logo.name || ""}
+              className="h-10 max-w-[10rem] object-contain sm:h-12"
+            />
+          ) : (
+            <Logo />
+          )}
+        </span>
+      ))}
     </div>
   );
 }

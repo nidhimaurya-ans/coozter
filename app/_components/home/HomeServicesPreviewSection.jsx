@@ -3,30 +3,39 @@
 import Link from "next/link";
 import AnimatedSection from "@/components/AnimatedSection";
 import { services } from "@/data/services";
+import useHomePageContent from "@/src/hooks/useHomePageContent";
 import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
 
-const previewServices = services.slice(0, 5);
-const signals = ["Partner trust", "Search intent", "Campaign testing", "Content proof", "Clean reporting"];
-
 export default function HomeServicesPreviewSection() {
+  const { servicesPreview } = useHomePageContent();
+  const selectedServices =
+    servicesPreview.serviceSlugs?.length > 0
+      ? servicesPreview.serviceSlugs
+          .map((slug) => services.find((service) => service.slug === slug))
+          .filter(Boolean)
+      : [];
+  const previewServices =
+    selectedServices.length > 0
+      ? selectedServices
+      : servicesPreview.services.length > 0
+      ? servicesPreview.services.slice(0, 5)
+      : services.slice(0, 5);
+
   return (
     <AnimatedSection className="container-pad py-5">
       <section className="relative overflow-hidden ">
-        <div className="pointer-events-none absolute right-[-7rem] top-1/2 h-80 w-80 -translate-y-1/2 rounded-full border border-moss/12 anim-rotate-slow" />
-
         <div className="relative z-10 grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-center">
           <div className="anim-left-to-right">
           
             <h2 className=" max-w-[18ch] font-serif text-[2.35rem] font-medium leading-[0.98] text-ink sm:text-5xl">
-              One growth system, many connected moves.
+              {servicesPreview.headline}
             </h2>
             <p className="mt-5 max-w-md text-base leading-8 text-ink/64">
-              Services are not presented as separate boxes. They move as a
-              connected path from trust and demand to campaigns and reporting.
+              {servicesPreview.description}
             </p>
 
             <div className="mt-7 flex flex-wrap gap-2.5">
-              {signals.map((signal, index) => (
+              {servicesPreview.signals.map((signal, index) => (
                 <span
                   key={signal}
                   className={`rounded-full border border-moss/14 bg-white/70 px-3 py-1.5 text-xs font-bold text-moss anim-fade-down anim-delay-${Math.min(index + 1, 5)}`}
@@ -37,10 +46,10 @@ export default function HomeServicesPreviewSection() {
             </div>
 
             <Link
-              href="/services"
+              href={servicesPreview.ctaHref}
               className="mt-7 inline-flex items-center gap-3 rounded-full bg-moss px-5 py-3 text-sm font-bold text-white shadow-[0_14px_34px_rgba(29,94,219,0.22)] transition hover:-translate-y-1"
             >
-              Explore all services
+              {servicesPreview.ctaLabel}
               <FiArrowRight />
             </Link>
           </div>

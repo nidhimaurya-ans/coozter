@@ -1,88 +1,30 @@
+"use client";
+
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 import MotionItem from "./MotionItem";
-
-const serviceGroups = [
-  {
-    title: "Affiliate Branding",
-    items: [
-      "Partner messaging",
-      "Referral landing pages",
-      "Offer positioning",
-      "Campaign tracking",
-      "Partner visibility",
-    ],
-    href: "#affiliate-branding",
-    cta: "More Affiliate Branding",
-  },
-  {
-    title: "Paid Performance",
-    items: [
-      "Google Ads",
-      "Social ad testing",
-      "Retargeting",
-      "Landing pages",
-      "Budget guidance",
-    ],
-    href: "#paid-advertising",
-    cta: "More Paid Campaigns",
-  },
-  {
-    title: "Search Engine Optimization",
-    items: [
-      "Search intent research",
-      "Technical SEO audit",
-      "Comparison pages",
-      "Content briefs",
-      "Conversion updates",
-    ],
-    href: "#seo-growth",
-    cta: "More Organic SEO",
-  },
-  {
-    title: "Content & Lead Systems",
-    items: [
-      "Content strategy",
-      "Lead magnets",
-      "Email journeys",
-      "Nurture flows",
-      "Reporting cadence",
-    ],
-    href: "#content-marketing",
-    cta: "More Content Systems",
-  },
-  {
-    title: "Social Media Growth",
-    items: [
-      "Founder-led content",
-      "LinkedIn positioning",
-      "Community response",
-      "Video direction",
-      "Channel voice",
-    ],
-    href: "#social-media-growth",
-    cta: "More Social Growth",
-  },
-];
+import useServicesPageContent from "@/src/hooks/useServicesPageContent";
 
 export default function ServiceCategoriesSection() {
+  const { serviceCategories } = useServicesPageContent();
+
   return (
     <section className="relative isolate overflow-hidden py-5 text-ink">
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center opacity-35"
-        style={{ backgroundImage: "url('/assets/coozter-hero-bg.jpg')" }}
+        style={{ backgroundImage: `url('${serviceCategories.backgroundImageUrl}')` }}
       />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(245,251,255,0.96),rgba(225,244,255,0.9)),linear-gradient(180deg,rgba(255,255,255,0.9),rgba(211,237,255,0.88))]" />
 
       <div className="container-pad">
         <div className="mx-auto mb-14 max-w-5xl text-center anim-left-to-right">
           <h2 className="font-serif text-[2.8rem] font-medium leading-tight text-ink sm:text-5xl md:text-6xl">
-            Our Services
+            {serviceCategories.heading}
           </h2>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-          {serviceGroups.map(({ title, items, href, cta }, index) => (
+          {serviceCategories.groups.map(({ title, items, href, cta }, index) => (
             <MotionItem
               as="article"
               key={title}

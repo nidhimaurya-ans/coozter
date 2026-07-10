@@ -15,6 +15,12 @@ export const blogImages = {
     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=84",
 };
 
-export function getBlogImage(slug) {
+export function getBlogImage(postOrSlug) {
+  if (typeof postOrSlug === "object" && postOrSlug?.imageUrl) {
+    return postOrSlug.imageUrl;
+  }
+
+  const slug = typeof postOrSlug === "object" ? postOrSlug?.slug : postOrSlug;
+
   return blogImages[slug] || blogImages["affiliate-branding-beyond-referrals"];
 }

@@ -1,8 +1,13 @@
+"use client";
+
 import AnimatedSection from "@/components/AnimatedSection";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
+import useHomePageContent from "@/src/hooks/useHomePageContent";
 
 export default function HomeContactSection() {
+  const { contact } = useHomePageContent();
+
   return (
     <AnimatedSection className="container-pad py-8 sm:py-10">
       <section className="relative isolate overflow-hidden rounded-[1.5rem] border border-blue-100 bg-[linear-gradient(135deg,#ffffff_0%,#f6fbff_48%,#e2f3ff_100%)] px-5 py-12 text-ink shadow-[0_22px_70px_rgba(14,62,128,0.08)] sm:px-8 sm:py-14 lg:px-12 lg:py-16">
@@ -12,26 +17,25 @@ export default function HomeContactSection() {
 
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="mx-auto mt-5  text-[2.8rem] font-bold leading-[1.02] tracking-normal text-ink sm:text-[4rem] lg:text-[3rem] anim-fade-up anim-delay-1">
-            Ready to grow your website ?
+            {contact.heading}
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-8 text-ink/68 sm:text-lg anim-fade-up anim-delay-2">
-            Bring affiliate partnerships, search, campaigns, and reporting into
-            one practical operating system for measurable growth.
+            {contact.description}
           </p>
 
           <div className="mx-auto mt-8 flex max-w-xl flex-col justify-center gap-3 sm:flex-row anim-fade-up anim-delay-3">
             <Link
-              href="/contact"
+              href={contact.primaryCtaHref}
               className="group inline-flex h-14 w-full items-center justify-center gap-2 rounded-[0.65rem] bg-[#096cff] px-7 text-sm font-extrabold text-white shadow-[0_16px_42px_rgba(9,108,255,0.32)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#005ce6] sm:w-auto"
             >
-              Book a Strategy Call
+              {contact.primaryCtaLabel}
               <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <Link
-              href="/services"
+              href={contact.secondaryCtaHref}
               className="inline-flex h-14 w-full items-center justify-center rounded-[0.65rem] border border-[#8bb7ff] bg-white/85 px-7 text-sm font-extrabold text-[#0d5ee8] shadow-[0_12px_30px_rgba(13,94,232,0.09)] transition duration-300 hover:-translate-y-0.5 hover:border-[#0d5ee8] hover:bg-white sm:w-auto"
             >
-              Explore Services
+              {contact.secondaryCtaLabel}
             </Link>
           </div>
         </div>
