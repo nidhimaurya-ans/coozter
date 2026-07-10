@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
-import { adminDb } from "@/src/services/firebaseAdmin";
+import { getAdminDb } from "@/src/services/firebaseAdmin";
 
 function cleanText(value) {
   return String(value || "").trim();
@@ -40,7 +40,7 @@ export async function POST(request) {
       return NextResponse.json({ errors }, { status: 400 });
     }
 
-    const docRef = await adminDb
+    const docRef = await getAdminDb()
       .collection("projects")
       .doc("coozter")
       .collection("leads")

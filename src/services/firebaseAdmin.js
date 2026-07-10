@@ -7,21 +7,45 @@ function getPrivateKey() {
 
 function getServiceAccount() {
   if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    return JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+    return {
+      project_id: serviceAccount.project_id || serviceAccount.projectId,
+      client_email: serviceAccount.client_email || serviceAccount.clientEmail,
+      private_key: serviceAccount.private_key || serviceAccount.privateKey,
+    };
   }
 
   return {
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: getPrivateKey(),
+    project_id:
+      process.env.FIREBASE_PROJECT_ID ||
+      process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    private_key: getPrivateKey(),
   };
 }
 
-const adminApp =
-  getApps().length > 0
-    ? getApps()[0]
-    : initializeApp({
-        credential: cert(getServiceAccount()),
-      });
+function getAdminApp() {
+  if (getApps().length > 0) {
+    return getApps()[0];
+  }
 
-export const adminDb = getFirestore(adminApp);
+  const serviceAccount = getServiceAccount();
+  if (
+    !serviceAccount.project_id ||
+    !serviceAccount.client_email ||
+    !serviceAccount.private_key
+  ) {
+    throw new Error(
+      "Firebase Admin credentials are missing. Add FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, and FIREBASE_PRIVATE_KEY in Vercel.",
+    );
+  }
+
+  return initializeApp({
+    credential: cert(serviceAccount),
+  });
+}
+
+export function getAdminDb() {
+  return getFirestore(getAdminApp());
+}
