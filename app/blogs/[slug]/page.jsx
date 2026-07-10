@@ -233,37 +233,13 @@ function RelatedArticle({ post }) {
 }
 
 async function loadBlog(slug) {
-  try {
-    const { getBlogBySlug } = await import("@/src/services/blogService");
-
-    return (
-      (await getBlogBySlug(slug)) ||
-      blogs.find((item) => item.slug === slug) ||
-      null
-    );
-  } catch (error) {
-    console.error("Unable to load Firebase blog", error);
-    return blogs.find((item) => item.slug === slug) || null;
-  }
+  return blogs.find((item) => item.slug === slug) || null;
 }
 
 async function loadBlogs() {
-  try {
-    const { getPublishedBlogs } = await import("@/src/services/blogService");
-    const firebaseBlogs = await getPublishedBlogs();
-    return firebaseBlogs.length > 0 ? firebaseBlogs : blogs;
-  } catch (error) {
-    console.error("Unable to load Firebase blogs", error);
-    return blogs;
-  }
+  return blogs;
 }
 
 async function loadBlogPageContent() {
-  try {
-    const { getBlogPageContent } = await import("@/src/services/blogPageService");
-    return await getBlogPageContent();
-  } catch (error) {
-    console.error("Unable to load Firebase blog page content", error);
-    return fallbackBlogPageContent;
-  }
+  return fallbackBlogPageContent;
 }
