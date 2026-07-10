@@ -2,7 +2,9 @@ import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
 function getPrivateKey() {
-  return process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+  return process.env.FIREBASE_PRIVATE_KEY
+    ?.replace(/^"|"$/g, "")
+    .replace(/\\n/g, "\n");
 }
 
 function getServiceAccount() {
@@ -42,6 +44,7 @@ function getAdminApp() {
   }
 
   return initializeApp({
+    projectId: serviceAccount.project_id,
     credential: cert(serviceAccount),
   });
 }
