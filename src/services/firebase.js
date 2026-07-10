@@ -17,23 +17,42 @@ const firebaseConfig = {
 
 export const firebaseProjectId = firebaseConfig.projectId;
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const hasFirebaseConfig =
+  Boolean(firebaseConfig.apiKey) &&
+  Boolean(firebaseConfig.projectId) &&
+  Boolean(firebaseConfig.appId);
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+const app = hasFirebaseConfig
+  ? getApps().length
+    ? getApp()
+    : initializeApp(firebaseConfig)
+  : null;
 
-export const coozterProjectRef = doc(db, "projects", "coozter");
-export const coozterDealsRef = collection(db, "projects", "coozter", "deals");
-export const coozterCategoriesRef = collection(
-  db,
-  "projects",
-  "coozter",
-  "categories",
-);
+function getOptionalAuth() {
+  if (!app) return null;
+
+  try {
+    return getAuth(app);
+  } catch (error) {
+    console.error("Firebase Auth is not available:", error);
+    return null;
+  }
+}
+
+export const auth = getOptionalAuth();
+export const db = app ? getFirestore(app) : null;
+export const storage = app ? getStorage(app) : null;
+
+export const coozterProjectRef = db ? doc(db, "projects", "coozter") : null;
+export const coozterDealsRef = db
+  ? collection(db, "projects", "coozter", "deals")
+  : null;
+export const coozterCategoriesRef = db
+  ? collection(db, "projects", "coozter", "categories")
+  : null;
 
 export async function getFirebaseAnalytics() {
-  if (typeof window === "undefined" || !(await isSupported())) {
+  if (!app || typeof window === "undefined" || !(await isSupported())) {
     return null;
   }
 
