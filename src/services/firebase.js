@@ -1,6 +1,5 @@
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { collection, doc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
@@ -28,18 +27,7 @@ const app = hasFirebaseConfig
     : initializeApp(firebaseConfig)
   : null;
 
-function getOptionalAuth() {
-  if (!app) return null;
-
-  try {
-    return getAuth(app);
-  } catch (error) {
-    console.error("Firebase Auth is not available:", error);
-    return null;
-  }
-}
-
-export const auth = getOptionalAuth();
+export const auth = null;
 export const db = app ? getFirestore(app) : null;
 export const storage = app ? getStorage(app) : null;
 
