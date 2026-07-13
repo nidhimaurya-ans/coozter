@@ -9,7 +9,10 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 
-const blogsCollection = collection(db, "projects", "coozter", "blogs");
+function getBlogsCollection() {
+  if (!db) return null;
+  return collection(db, "projects", "coozter", "blogs");
+}
 
 function getDateValue(value) {
   if (!value) return 0;
@@ -89,6 +92,9 @@ function isBlogPostDoc(item) {
 }
 
 export async function getPublishedBlogs() {
+  const blogsCollection = getBlogsCollection();
+  if (!blogsCollection) return [];
+
   const snapshot = await getDocs(blogsCollection);
   return sortBlogs(
     snapshot.docs
@@ -99,6 +105,12 @@ export async function getPublishedBlogs() {
 }
 
 export function subscribePublishedBlogs(onData, onError) {
+  const blogsCollection = getBlogsCollection();
+  if (!blogsCollection) {
+    onData([]);
+    return () => {};
+  }
+
   return onSnapshot(
     blogsCollection,
     (snapshot) => {
@@ -116,6 +128,9 @@ export function subscribePublishedBlogs(onData, onError) {
 }
 
 export async function getBlogBySlug(slug) {
+  const blogsCollection = getBlogsCollection();
+  if (!blogsCollection) return null;
+
   const directSnapshot = await getDoc(doc(blogsCollection, slug));
 
   if (directSnapshot.exists()) {
