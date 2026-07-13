@@ -1,11 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  FiCalendar,
-  FiClock,
-  FiShare2,
-  FiUser,
-} from "react-icons/fi";
+import { FiCalendar, FiClock, FiShare2, FiUser } from "react-icons/fi";
 import { blogs as fallbackBlogs } from "@/data/blogs";
 import { getBlogBySlug, getPublishedBlogs } from "@/src/services/blogService";
 import CopyLinkButton from "../_components/CopyLinkButton";
@@ -42,7 +37,9 @@ export default async function BlogDetailPage({ params }) {
   if (!post) notFound();
   const blogPageContent = await loadBlogPageContent();
   const allPosts = await loadBlogs();
-  const related = allPosts.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const related = allPosts
+    .filter((item) => item.slug !== post.slug)
+    .slice(0, 3);
   const recent = allPosts.filter((item) => item.slug !== post.slug).slice(0, 4);
   const image = getBlogImage(post);
   const heroImage = post.imageUrl || image;
@@ -132,7 +129,8 @@ export default async function BlogDetailPage({ params }) {
                   <div key={paragraph}>
                     {index === 0 && (
                       <h2 className="mb-6 font-serif text-3xl font-bold leading-tight text-ink sm:text-4xl">
-                        {post.pullQuote || blogPageContent.detail.fieldNoteBadge}
+                        {post.pullQuote ||
+                          blogPageContent.detail.fieldNoteBadge}
                       </h2>
                     )}
                     <p className="text-[0.98rem] font-medium leading-8 text-ink/78">
@@ -169,7 +167,9 @@ export default async function BlogDetailPage({ params }) {
                   >
                     <FiShare2 size={16} />
                   </Link>
-                  <CopyLinkButton label={blogPageContent.detail.copyLinkLabel} />
+                  <CopyLinkButton
+                    label={blogPageContent.detail.copyLinkLabel}
+                  />
                 </div>
               </div>
             </div>
@@ -221,7 +221,9 @@ function RelatedArticle({ post }) {
             className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
           />
         </div>
-        <p className="mt-5 text-xs font-semibold text-ink/45">{post.category}</p>
+        <p className="mt-5 text-xs font-semibold text-ink/45">
+          {post.category}
+        </p>
         <h3 className="mt-3 font-serif text-xl font-bold leading-tight text-ink transition group-hover:text-[#0d5ee8]">
           {post.title}
         </h3>
