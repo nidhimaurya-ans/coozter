@@ -207,15 +207,19 @@ export const defaultServicesPageContent = {
   },
 };
 
-const servicesPageRef = doc(db, "projects", "coozter", "pages", "services");
-const servicesCollectionRef = collection(db, "projects", "coozter", "services");
-const servicesPageContentRef = doc(
-  db,
-  "projects",
-  "coozter",
-  "services",
-  "servicesPageContent",
-);
+function getServicesPageRef() {
+  return db ? doc(db, "projects", "coozter", "pages", "services") : null;
+}
+
+function getServicesCollectionRef() {
+  return db ? collection(db, "projects", "coozter", "services") : null;
+}
+
+function getServicesPageContentRef() {
+  return db
+    ? doc(db, "projects", "coozter", "services", "servicesPageContent")
+    : null;
+}
 
 function normalizeOrderedItems(items = []) {
   return items
@@ -400,6 +404,15 @@ export function subscribeServicesPageContent(onData, onError) {
   let servicesPageData = {};
   let servicesPageContentData = {};
   const servicesCollectionDocs = {};
+
+  const servicesPageRef = getServicesPageRef();
+  const servicesCollectionRef = getServicesCollectionRef();
+  const servicesPageContentRef = getServicesPageContentRef();
+
+  if (!servicesPageRef || !servicesCollectionRef || !servicesPageContentRef) {
+    onData(defaultServicesPageContent);
+    return () => {};
+  }
 
   function emit() {
     const servicesCollectionData = Object.values(servicesCollectionDocs).reduce(

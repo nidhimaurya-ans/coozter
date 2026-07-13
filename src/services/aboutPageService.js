@@ -177,15 +177,19 @@ export const defaultAboutPageContent = {
   ],
 };
 
-const aboutPageRef = doc(db, "projects", "coozter", "pages", "about");
-const aboutCollectionRef = collection(db, "projects", "coozter", "about");
-const aboutPageContentRef = doc(
-  db,
-  "projects",
-  "coozter",
-  "about",
-  "aboutPageContent",
-);
+function getAboutPageRef() {
+  return db ? doc(db, "projects", "coozter", "pages", "about") : null;
+}
+
+function getAboutCollectionRef() {
+  return db ? collection(db, "projects", "coozter", "about") : null;
+}
+
+function getAboutPageContentRef() {
+  return db
+    ? doc(db, "projects", "coozter", "about", "aboutPageContent")
+    : null;
+}
 
 function normalizeOrderedItems(items = []) {
   return items
@@ -379,6 +383,15 @@ export function subscribeAboutPageContent(onData, onError) {
   let aboutPageData = {};
   let aboutPageContentData = {};
   const aboutCollectionDocs = {};
+
+  const aboutPageRef = getAboutPageRef();
+  const aboutCollectionRef = getAboutCollectionRef();
+  const aboutPageContentRef = getAboutPageContentRef();
+
+  if (!aboutPageRef || !aboutCollectionRef || !aboutPageContentRef) {
+    onData(defaultAboutPageContent);
+    return () => {};
+  }
 
   function emit() {
     const aboutCollectionData = Object.values(aboutCollectionDocs).reduce(

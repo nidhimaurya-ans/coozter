@@ -129,24 +129,33 @@ export const defaultHomePageContent = {
   },
 };
 
-const projectRef = doc(db, "projects", "coozter");
-const homePageRef = doc(db, "projects", "coozter", "pages", "home");
-const homeCollectionRef = collection(db, "projects", "coozter", "home");
-const homePageContentRef = doc(
-  db,
-  "projects",
-  "coozter",
-  "home",
-  "homePageContent",
-);
-const heroSectionRefs = [
-  doc(db, "projects", "coozter", "homesection", "hero"),
-  doc(db, "projects", "coozter", "homesection", "hero-section"),
-  doc(db, "projects", "coozter", "home", "hero"),
-  doc(db, "projects", "coozter", "home", "content"),
-  doc(db, "projects", "coozter", "home", "data"),
-  doc(db, "projects", "coozter", "sections", "hero"),
-];
+function getProjectRef() {
+  return db ? doc(db, "projects", "coozter") : null;
+}
+
+function getHomePageRef() {
+  return db ? doc(db, "projects", "coozter", "pages", "home") : null;
+}
+
+function getHomeCollectionRef() {
+  return db ? collection(db, "projects", "coozter", "home") : null;
+}
+
+function getHomePageContentRef() {
+  return db ? doc(db, "projects", "coozter", "home", "homePageContent") : null;
+}
+
+function getHeroSectionRefs() {
+  if (!db) return [];
+  return [
+    doc(db, "projects", "coozter", "homesection", "hero"),
+    doc(db, "projects", "coozter", "homesection", "hero-section"),
+    doc(db, "projects", "coozter", "home", "hero"),
+    doc(db, "projects", "coozter", "home", "content"),
+    doc(db, "projects", "coozter", "home", "data"),
+    doc(db, "projects", "coozter", "sections", "hero"),
+  ];
+}
 
 const heroFieldKeys = [
   "eyebrowText",
@@ -517,6 +526,17 @@ export function subscribeHomePageContent(onData, onError) {
   let homePageContentData = {};
   const homeCollectionDocs = {};
   const heroSectionDocs = {};
+
+  const projectRef = getProjectRef();
+  const homePageRef = getHomePageRef();
+  const homeCollectionRef = getHomeCollectionRef();
+  const homePageContentRef = getHomePageContentRef();
+  const heroSectionRefs = getHeroSectionRefs();
+
+  if (!projectRef || !homePageRef || !homeCollectionRef || !homePageContentRef) {
+    onData(defaultHomePageContent);
+    return () => {};
+  }
 
   function emit() {
     const homeCollectionData = Object.values(homeCollectionDocs).reduce(

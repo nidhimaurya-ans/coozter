@@ -12,7 +12,8 @@ import { FiArrowRight, FiBookOpen, FiClock } from "react-icons/fi";
 export default function HomeBlogPreviewSection() {
   const { blogPreview } = useHomePageContent();
   const [publishedPosts, setPublishedPosts] = useState([]);
-  const availablePosts = publishedPosts.length > 0 ? publishedPosts : fallbackBlogs;
+  const availablePosts =
+    publishedPosts.length > 0 ? publishedPosts : fallbackBlogs;
   const selectedPosts =
     blogPreview.blogSlugs?.length > 0
       ? blogPreview.blogSlugs
@@ -52,17 +53,19 @@ export default function HomeBlogPreviewSection() {
         <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="anim-left-to-right">
             <p className="inline-flex items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-moss">
-              {blogPreview.eyebrow}
+              {/* {blogPreview.eyebrow} */}
+              latest insights
             </p>
-            <h2 className="mt-4 max-w-3xl font-serif text-[2.35rem] font-medium leading-[0.98] text-ink sm:text-5xl">
-              {blogPreview.headline}
+            <h2 className="mt-4 max-w-3xl font-serif text-[2.35rem] font-medium leading-[0.98] text-ink sm:text-4xl">
+              {/* {blogPreview.headline} */}
+              Strategic Insights for Growing Businesses
             </h2>
           </div>
           <Link
-            href={blogPreview.ctaHref}
+            href="/blogs"
             className="inline-flex w-fit items-center gap-3 rounded-full border border-moss/20 px-5 py-3 text-sm font-bold text-moss transition hover:-translate-y-1 hover:border-coral/50"
           >
-            {blogPreview.ctaLabel}
+            {blogPreview.ctaLabel || "Read blogs"}
             <FiArrowRight />
           </Link>
         </div>
@@ -82,16 +85,16 @@ export default function HomeBlogPreviewSection() {
               {featured.category}
             </div>
             <div className="absolute bottom-6 left-6 right-6 text-white">
-              <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-sky-100">
+              {/* <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-sky-100">
                 <FiClock />
                 {featured.readTime}
-              </p>
-              <h3 className="mt-3 max-w-xl font-serif text-4xl leading-tight">
+              </p> */}
+              <span className=" top-2 right-3 rounded-full bg-ink/70 px-3 py-1.5 text-xs font-bold text-white">
+                {featured.readTime}
+              </span>
+              <h3 className="mt-4 max-w-xl font-serif text-3xl leading-tight">
                 {featured.title}
               </h3>
-              <p className="mt-4 max-w-xl text-sm leading-6 text-white/74">
-                {featured.excerpt}
-              </p>
             </div>
           </Link>
 
@@ -115,13 +118,10 @@ export default function HomeBlogPreviewSection() {
                     {post.readTime}
                   </span>
                 </div>
-                <div className="absolute bottom-5 left-5 right-5 text-white">
+                <div className="absolute bottom-2 left-5 right-5 text-white">
                   <h3 className="font-serif text-3xl leading-tight">
                     {post.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-white/70">
-                    {post.excerpt}
-                  </p>
                 </div>
               </Link>
             ))}
