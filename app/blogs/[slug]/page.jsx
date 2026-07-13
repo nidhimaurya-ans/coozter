@@ -6,7 +6,8 @@ import {
   FiShare2,
   FiUser,
 } from "react-icons/fi";
-import { blogs } from "@/data/blogs";
+import { blogs as fallbackBlogs } from "@/data/blogs";
+import { getBlogBySlug, getPublishedBlogs } from "@/src/services/blogService";
 import CopyLinkButton from "../_components/CopyLinkButton";
 import { getBlogImage } from "../_data/blogImages";
 
@@ -233,11 +234,25 @@ function RelatedArticle({ post }) {
 }
 
 async function loadBlog(slug) {
-  return blogs.find((item) => item.slug === slug) || null;
+  try {
+    const publishedPost = await getBlogBySlug(slug);
+    if (publishedPost) return publishedPost;
+  } catch (error) {
+    console.error("Unable to load blog from Firebase", error);
+  }
+
+  return fallbackBlogs.find((item) => item.slug === slug) || null;
 }
 
 async function loadBlogs() {
-  return blogs;
+  try {
+    const publishedPosts = await getPublishedBlogs();
+    if (publishedPosts?.length) return publishedPosts;
+  } catch (error) {
+    console.error("Unable to load published blogs from Firebase", error);
+  }
+
+  return fallbackBlogs;
 }
 
 async function loadBlogPageContent() {
